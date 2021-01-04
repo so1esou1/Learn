@@ -1,0 +1,4 @@
+﻿D:\VisualStudio2019\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(491,5): warning MSB8028: 中间目录(Debug\)包含从另一个项目(Clearn1.7.vcxproj, Clearn2.7.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  cycle_ForTest.c
+  Clearn1.7.vcxproj -> D:\C语言code\Clearn1.7\Debug\Clearn2.3.exe
+D:\VisualStudio2019\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(5138,5): warning MSB3061: 无法删除文件“D:\C语言code\Clearn1.7\Debug\Clearn2.7.exe”。对路径“D:\C语言code\Clearn1.7\Debug\Clearn2.7.exe”的访问被拒绝。

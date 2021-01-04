@@ -1,0 +1,2 @@
+D:\C语言code\Clearn1.6\Debug\Clearn1.6.exe
+D:\C语言code\Clearn1.6\Debug\Clearn1.6.pdb
