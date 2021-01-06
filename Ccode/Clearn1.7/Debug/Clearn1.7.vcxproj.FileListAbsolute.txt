@@ -1,3 +1,0 @@
-D:\C语言code\Clearn1.7\Debug\Clearn2.7.exe
-D:\C语言code\Clearn1.7\Debug\Clearn2.3.exe
-D:\C语言code\Clearn1.7\Debug\Clearn2.3.pdb
