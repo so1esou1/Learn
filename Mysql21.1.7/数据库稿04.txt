@@ -1,0 +1,130 @@
+								表的创建和修改()
+一、创建表
+1、建表语句的语法格式：
+  create table 表名(
+      字段名1 数据类型,
+      字段名2 数据类型,
+      字段名3 数据类型,
+	.....
+  );
+2、mysql当中字段常见的数据类型？
+  int        整数型(java中的int)
+  bigint     长整型（java中的long）
+  float	     浮点型（java中的float、double）
+  char       定长字符串（String）
+  varchar    不定长/可变长字符串（255个字符）（StringBuffer或StringBuilder）（根据实际存入的数据动态地内存空间进行存储）
+  date       日期类型(对应java中的java.sql.Date类型)
+  BLOB       二进制大对象（存储图片、视频等流媒体信息）Binary Large OBject（对应java中的Object）
+  CLOB       字符大对象（存储较大文本，比如可以存储4个G的字符串）Character Large OBject(对应java中的Object)
+
+varchar可以根据实际存入的数据动态地内存空间进行存储，但是char不需要进行运算。在实际开发中，当某个字段的数据长度不发生改变的
+时候，是定长的，如性别、生日等都是采用char，当一个字段的数据长度不确定的时候，都是采用varchar
+
+BLOB和CLOB怎么使用？不是普通的文本，是二进制，需要用到IO流才能传进去
+  电影表：t_movie
+  id(int)    name(varchar)	playtime(date/char)	post(BLOB)	剧情(CLOB)
+  ----------------------------------------------------------------------------------------
+  1	    ？？		
+  2	    ？？？
+  3	    ？
+建议：表名在数据库中一般建议以：t_或者tbl_开始。
+
+3、创表语句：
+创建学生表：
+  学生信息包括：
+	学号、姓名、性别、班级编号、生日
+	学号：bigint
+	姓名：varchar
+	性别：char
+	班级编号：varchar
+	生日：date/char
+
+  create table t_student(
+	no bigint,
+	name varchar(255),
+	sex char(1),
+	classno varchar(255),
+	birth char(10)
+  );
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| no      | bigint(20)   | YES  |     | NULL    |       |
+| name    | varchar(255) | YES  |     | NULL    |       |
+| sex     | char(1)      | YES  |     | NULL    |       |
+| classno | varchar(255) | YES  |     | NULL    |       |
+| birth   | char(10)     | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+
+4、向表中插入数据
+  语法格式：
+    insert into 表名(字段名1,字段名2,字段名3,....) values(值1,值2,值3,....)
+    要求：字段数量与值的数量相同，并且数据类型对应相同
+
+  插入数据：insert into t_student(no,name,sex,classno,birth) values(1,'zhangsan','1','gaosan1ban','1950-10-12');
+
+mysql> select * from t_student;
++------+----------+------+------------+-------+
+| no   | name     | sex  | classno    | birth |
++------+----------+------+------------+-------+
+|    1 | zhangsan | 1    | gaosan1ban | 1928  |
++------+----------+------+------------+-------+
+
+insert只要执行成功，必然会多一条记录，即使数据是NULL，也不能再通过insert添加数据了，只能用update更新
+
+  drop table if exist t_student;   //如果这张表存在就删除这张表
+    create table t_student(
+	no bigint,
+	name varchar(255),
+	sex char(1) default 1,     //这个字段默认是1
+	classno varchar(255),
+	birth char(10)
+  );
+
+  
+5、 字段可以省略不写，但因此后面的value对数量和顺序都有严格的要求
+  insert into t_student values(1,'jack','0','gaosan2ban','1986-10-23');
+  
+  一次插入多行数据：
+  insert into t_student
+    (no,name,sex,classno,birth) 
+  values
+    (3,'rose','1','gaosi2ban','1952-12-14'),(4,'laotie','1','gaosi2ban','1955-12-14');
++------+----------+------+------------+------------+
+| no   | name     | sex  | classno    | birth      |
++------+----------+------+------------+------------+
+|    1 | zhangsan | 1    | gaosan1ban | 1928       |
+|    1 | zhangsan | 1    | gaosan1ban | 1950-10-12 |
+|    3 | rose     | 1    | gaosi2ban  | 1952-12-14 |
+|    4 | laotie   | 1    | gaosi2ban  | 1955-12-14 |
++------+----------+------+------------+------------+
+
+
+二、表的复制
+1、  create table emp1 as select * from emp;   //创建一张表emp1，把后面查询结果当作一张表创建出来
+  
+  select * from emp1;  //查看emp1表的结构。
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987-04-19 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+2、复制的语法：
+  create table 表名 as select语句;
+  将查询结果当作表创建出来
+
+3、将查询结果插入到一张表中
+  inserte into 表名 select语句;   将...的查询结果插入到一张表中（列数有要求的）

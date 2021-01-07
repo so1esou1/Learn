@@ -1,0 +1,314 @@
+  单行处理函数：输入一行，输出一行，输入输出行数保持不变
+  select ename,(sal + comm) * 12 as yearsal from emp;
+mysql> select ename,(sal + comm) * 12 as yearsal from emp;
++--------+----------+
+| ename  | yearsal  |
++--------+----------+
+| SMITH  |     NULL |
+| ALLEN  | 22800.00 |
+| WARD   | 21000.00 |
+| JONES  |     NULL |
+| MARTIN | 31800.00 |
+| BLAKE  |     NULL |
+| CLARK  |     NULL |
+| SCOTT  |     NULL |
+| KING   |     NULL |
+| TURNER | 18000.00 |
+| ADAMS  |     NULL |
+| JAMES  |     NULL |
+| FORD   |     NULL |
+| MILLER |     NULL |   注意：只要有NULL参与的运算，最后结果不管怎么样都是NULL！！！所有数据库都是这样规定的！！！
++--------+----------+
+***解决方法：  ifnull() 空值处理函数
+  语法：ifnull(可能为NULL的数据，被当作什么处理)
+   select ename,(sal + ifnull(comm,0)) * 12 as yearsal from emp;
+
+ mysql> select ename,(sal + ifnull(comm,0)) * 12 as yearsal from emp;
++--------+----------+
+| ename  | yearsal  |
++--------+----------+
+| SMITH  |  9600.00 |
+| ALLEN  | 22800.00 |
+| WARD   | 21000.00 |
+| JONES  | 35700.00 |
+| MARTIN | 31800.00 |
+| BLAKE  | 34200.00 |
+| CLARK  | 29400.00 |
+| SCOTT  | 36000.00 |
+| KING   | 60000.00 |
+| TURNER | 18000.00 |
+| ADAMS  | 13200.00 |
+| JAMES  | 11400.00 |
+| FORD   | 36000.00 |
+| MILLER | 15600.00 |
++--------+----------+
+
+								
+								分组函数
+分组函数(也叫多行处理函数)，总共只有以下5个，特点是输入多行，最终输出结果是一行。
+一、count 计数
+sum   求和
+avg   平均值
+max   最大值
+min   最小值
+记住：所有的分组函数都是对“某一组”数据进行操作的
+
+例：找出员工的工资总和？
+  select sum(sal) from emp;
+
+mysql> select sum(sal) from emp;
++----------+
+| sum(sal) |
++----------+
+| 29025.00 |
++----------+
+
+找出最高工资(max(sal))、最低工资(min(sal))、平均工资(avg(sal))？总人数(count(*)或者count(ename))
+
+二、*分组函数会自动忽略空null
+  select count(comm) from emp;
+	+-------------+
+	| count(comm) |
+	+-------------+
+	|           4 |
+	+-------------+
+没有统计null的那些人
+
+mysql> select sum(comm) from emp;   不需要添加where comm is not null这种过滤条件，sum函数自动忽略null
++-----------+
+| sum(comm) |
++-----------+
+|   2200.00 |
++-----------+
+
+三、找出工资高于平均工资的员工
+  select ename,sal from emp where sal > avg(sal);   //这样的写法是错的。
+  SQL语句有一个语法规则：分组函数不可以直接出现在where子句当中（因为group by在where后面执行，产生矛盾）
+  改法：第一步：找出平均工资：
+  select avg(sal) from emp; 
+mysql> select avg(sal) from emp;
++-------------+
+| avg(sal)    |
++-------------+
+| 2073.214286 |
++-------------+
+  第二步：找出高于平均工资的员工
+  select ename,sal from emp where sal > 2073.214286;
+mysql> select ename,sal from emp where sal > 2073.214286;
++-------+---------+
+| ename | sal     |
++-------+---------+
+| JONES | 2975.00 |
+| BLAKE | 2850.00 |
+| CLARK | 2450.00 |
+| SCOTT | 3000.00 |
+| KING  | 5000.00 |
+| FORD  | 3000.00 |
++-------+---------+
+将两条语句拼接在一起写的话：
+  select ename,sal from emp where sal > (select avg(sal) from emp);(真拼接)（这是子查询嵌套语句）
+
+mysql> select ename,sal from emp where sal > (select avg(sal) from emp);
++-------+---------+
+| ename | sal     |
++-------+---------+
+| JONES | 2975.00 |
+| BLAKE | 2850.00 |
+| CLARK | 2450.00 |
+| SCOTT | 3000.00 |
+| KING  | 5000.00 |
+| FORD  | 3000.00 |
++-------+---------+
+
+
+四、count(*)和count(具体的某个字段)，有什么区别？
+select count(comm) from emp;       
+	+-------------+
+	| count(comm) |
+	+-------------+
+	|           4 |    count(具体的某个字段)统计的不为null的元素总数
+	+-------------+
+mysql> select count(*) from emp;
+	+----------+
+	| count(*) |
+	+----------+
+	|       14 |	   count(*)统计的是总记录条数，不是统计某个字段中数据的个数（和某个字段无关）
+	+----------+
+
+五、分组函数也可以组合起来使用：
+  select count(*),sum(sal),avg(sal),max(sal),min(sal) from emp;
+
+mysql> select count(*),sum(sal),avg(sal),max(sal),min(sal) from emp;
++----------+----------+-------------+----------+----------+
+| count(*) | sum(sal) | avg(sal)    | max(sal) | min(sal) |
++----------+----------+-------------+----------+----------+
+|       14 | 29025.00 | 2073.214286 |  5000.00 |   800.00 |
++----------+----------+-------------+----------+----------+
+
+六、group by 和having：
+1、group by:按照某个字段或者某些字段进行分组
+having：对分组之后的数据进行再次过滤
+
+2、案例：找出每个工作岗位的最高薪资：
+  select max(sal),job from emp group by job;   先进行分组，再对每一组求最大值（注意：分组函数永远在group by执行之后再执行）
+
+mysql> select max(sal),job from emp group by job;
++----------+-----------+
+| max(sal) | job       |
++----------+-----------+
+|  3000.00 | ANALYST   |
+|  1300.00 | CLERK     |
+|  2975.00 | MANAGER   |
+|  5000.00 | PRESIDENT |
+|  1600.00 | SALESMAN  |
++----------+-----------+
+
+select ename,max(sal),job from emp group by job;  //加上职员姓名，这样的写法无意义，在mysql有结果，在Oracle会报错，语法错误，Oracle语法比mysql严谨
+select后有group by的话最好只跟参与分组的字段!
+
+3、分组函数一般和group by联合使用，这也是为什么被称为分组函数。
+当一条sql语句没有group by的话，整张表的数据默认会自成一组。
+**执行顺序：
+  select	5
+    ...
+  from		1
+    ...
+  where		2
+    ...
+  group by	3
+    ...
+  having	4
+    ...
+  order by	6
+    ...
+
+4、多个字段能不能联合起来一起分组？  可以
+案例：找出每个部门不同岗位的最高薪资
+  select deptno,job,max(sal) from emp group by deptno,job;
+
+mysql> select deptno,job,max(sal) from emp group by deptno,job;
++--------+-----------+----------+
+| deptno | job       | max(sal) |
++--------+-----------+----------+
+|     10 | CLERK     |  1300.00 |
+|     10 | MANAGER   |  2450.00 |
+|     10 | PRESIDENT |  5000.00 |
+|     20 | ANALYST   |  3000.00 |
+|     20 | CLERK     |  1100.00 |
+|     20 | MANAGER   |  2975.00 |
+|     30 | CLERK     |   950.00 |
+|     30 | MANAGER   |  2850.00 |
+|     30 | SALESMAN  |  1600.00 |
++--------+-----------+----------+
+
+5、找出每个部门的最高薪资，要求显示薪资大于3000的数据？（用having语句）(写sql语句一步一步来)
+第一步：找出每个部门最高薪资
+select max(sal),deptno from emp group by deptno;
+第二步：找出薪资大于3000的
+select max(sal),deptno from emp group by deptno having max(sal) > 3000;
+这种方式效率低
+建议这样写：
+select max(sal),deptno from emp where sal > 3000 group by deptno;   先用where筛选，这样参与分组的数据会减少，效率提高
+能够使用where过滤的尽量使用where
+
+where后面用不了分组函数时，用having：
+案例：找出每个部门的平均薪资，要求显示薪资大于2000的数据
+第一步：
+  select deptno,avg(sal) from emp group by deptno;
+第二步：
+  select deptno,avg(sal) from emp group by deptno having avg(sal) > 2000;
+
+mysql> select deptno,avg(sal) from emp group by deptno having avg(sal) > 2000;
++--------+-------------+
+| deptno | avg(sal)    |
++--------+-------------+
+|     10 | 2916.666667 |
+|     20 | 2175.000000 |
++--------+-------------+
+having必须跟在group by后面，不能单独存在！
+
+
+
+总结：一个完整的DQL语句该怎么写？(这种顺序一定不能颠倒！)
+  select	5
+    ..
+  from		1
+    ..
+  where		2
+    ..
+  group by	3
+    ..
+  having	4
+    ..
+  order by	6
+    ..
+
+
+
+去重机制：
+关于查询结果的去重？（去除重复记录）
+1、在查询前加distinct关键字
+加之前：
+  select job from emp;
+
+mysql> select job from emp;
++-----------+
+| job       |
++-----------+
+| CLERK     |
+| SALESMAN  |
+| SALESMAN  |
+| MANAGER   |
+| SALESMAN  |
+| MANAGER   |
+| MANAGER   |
+| ANALYST   |
+| PRESIDENT |
+| SALESMAN  |
+| CLERK     |
+| CLERK     |
+| ANALYST   |
+| CLERK     |
++-----------+    有很多重复的
+加distinct之后：
+  select distinct job from emp;
+
+mysql> select distinct job from emp;
++-----------+
+| job       |
++-----------+
+| CLERK     |
+| SALESMAN  |
+| MANAGER   |
+| ANALYST   |
+| PRESIDENT |
++-----------+
+
+2、distinct可以在前面加其他字段吗？  不可以
+  select ename,distinct job from emp;   这种sql语句是错误的，前面的ename数量和job已经对应不上了
+记住：distinct只能出现在所有字段的最前面
+
+3、select distinct deptno,job from emp;  //distinct后面所有字段联合去重，这样记录条数才能一样
+
+mysql> select distinct deptno,job from emp;
++--------+-----------+
+| deptno | job       |
++--------+-----------+
+|     20 | CLERK     |
+|     30 | SALESMAN  |
+|     20 | MANAGER   |
+|     30 | MANAGER   |
+|     10 | MANAGER   |
+|     20 | ANALYST   |
+|     10 | PRESIDENT |
+|     30 | CLERK     |
+|     10 | CLERK     |
++--------+-----------+   某些数据还是重复了，但是整个来说，没有一个是相同的
+
+案例：统计岗位的数量
+  select count(distinct job) from emp;
++---------------------+
+| count(distinct job) |
++---------------------+
+|                   5 |
++---------------------+
