@@ -1,0 +1,382 @@
+								存储引擎
+一、什么是存储引擎？
+  MySQL特有，Oracle有但是不叫这个名字。
+  存储引擎描述的是表的存储方式，不同存储引擎描述不同数据的存储方式
+二、存储引擎示例：show create table emp;  //查看表的创建方式
+| emp   | CREATE TABLE `emp` (           //这是一段完整的建表语句(注意：在MySQL中，凡是标识符是可以使用飘号`括起来的，最好别用，不通用)
+  `EMPNO` int(4) NOT NULL,
+  `ENAME` varchar(10) DEFAULT NULL,
+  `JOB` varchar(9) DEFAULT NULL,
+  `MGR` int(4) DEFAULT NULL,
+  `HIREDATE` date DEFAULT NULL,
+  `SAL` double(7,2) DEFAULT NULL,
+  `COMM` double(7,2) DEFAULT NULL,
+  `DEPTNO` int(2) DEFAULT NULL,
+  PRIMARY KEY (`EMPNO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 |                  //这一段就是存储引擎，翻译：存储引擎用的是InnoDB(存储引擎的名称)的方式
+MySQL创建表的时候如果没有制定存储引擎，默认创建到InnoDB
+默认采用的字符集是UTF8（安装时选择的）
+
+三、查看当前采用的存储引擎：
+  show engines \G
+
+四、需要了解的几个存储引擎：
+1、MyISAM存储引擎
+      Engine: MyISAM
+     Support: YES
+     Comment: Default engine as of MySQL 3.23 with great performance
+Transactions: NO    //事务：no
+          XA: NO
+  Savepoints: NO
+这种存储引擎不支持事务
+MySQL最常用存储引擎，但不是默认的
+MyISAM采用三个文件组织一张表：xxx.frm(存储格式的文件)  xxx.MYD(存储表中数据的文件)   xxx.MYI(存储表中索引的文件)
+优点：可被压缩，节省存储空间，并且可以转换为只读表，提升检索效率
+缺点：不支持事务
+2、InnoDB存储引擎
+MySQL默认缺省的存储引擎
+      Engine: InnoDB
+     Support: DEFAULT
+     Comment: Supports transactions, row-level locking, and foreign keys
+Transactions: YES
+          XA: YES
+  Savepoints: YES
+优点：支持事务、外键、行级锁，数据最安全，
+
+表的结构存储在xxx.frm文件中
+数据结构存储在tablespace这样的空间中(逻辑概念)，无法被压缩，无法转化成只读
+在MySQL数据库崩溃后提供自动恢复
+*支持级联删除和级联更新（删除、更新父表时同时删除、更新子表，不建议使用，数据很珍贵）
+3、MEMORY存储引擎
+      Engine: MEMORY
+     Support: YES
+     Comment: Hash based, stored in memory, useful for temporary tables
+Transactions: NO
+          XA: NO
+  Savepoints: NO
+缺点：不支持事务。数据容易丢失，因为所有数据和索引都是存储在内存当中。不能存CLOB、BLOB字段
+优点：查询速度最快，数据索引都在内存里，但断电就没有了
+
+						
+								事务Transaction*****
+一、什么是事务？
+  一个事务是一个完整的业务逻辑单元，不可再分。
+  如：银行账户转账，从A账户向B账户转账10000元。    实现：需要执行两条update语句
+  update t_act set balance = balance - 10000 where actno = 'act-001';
+  update t_act set balance = balance + 10000 where actno = 'act-002';
+以上两条语句要求同时成功或者同时失败，不允许出现一条成功一条失败，要想保证同时性，就需要使用数据库的事务机制
+
+二、只有DML语句(insert delete update)才支持事务，才与事务有关系，其他所有语句都与事务无关,因为这三个语句跟数据库中的数据相关
+事务存在是为了保证数据的完整性、安全性
+
+三、假设所有业务都能使用1条DML语句搞定，事务就没有存在的意义了
+实际情况中，通常一个事务需要多条DML语句共同联合完成
+
+四、事务的特性：事务包括四大特性ACID
+  A:原子性：事务是最小的工作单元，不可再分
+  C:一致性：事务必须保证多条DML语句同时成功或失败
+  I:隔离性：事务A与B之间必须隔离
+  D:持久性：最终数据必须持久化到硬盘文件，事务才算成功结束。是事务的保障
+
+五、关于事务之间的隔离性：
+  事务隔离性存在隔离级别，理论上隔离级别包括4个：
+    第一级别：读未提交（read uncommitted），可以读取到对方未提交的事务，读未提交存在脏读(dirty read)现象，表示读到脏数据（极其不稳定）
+    第二级别（所有数据库几乎都是二档起步）：读已提交(read committed)，对方事务提交之后的数据可以读取到，解决了脏读现象
+      存在问题是：不可重复读
+    第三级别：可重复读(repeatable read)，这种隔离级别解决了不可重复读问题，提交了也读取不了
+      存在问题：读取到的东西是幻象
+    第四级别：序列化/串行化读，解决了所有问题，不会是幻象，全是真实。效率低，需要事务排队
+    Oracle数据库默认的隔离级别是：第二级别：读已提交
+    MySQL数据库默认的隔离级别是：第三级别：可重复读
+
+六、***演示事务
+*MySQL事务默认情况下是自动提交的（只要执行一条DML语句则提交一次）
+怎么关闭自动提交？    start transaction;
+
+*演示：
+  先准备数据/表：
+  drop table if exists t_user;
+  create table t_user(
+    id int primary key auto_increment,
+    username varchar(255)
+  );
+  start transaction;
+  rollback;
+  commit;
+
+七、使用两个事务演示隔离级别
+1、第一级别：读未提交
+  set global transaction isolation level read uncommitted;          //设置全局的事务隔离级别为read uncommitted
+  查询事务的全局隔离级别：select @@global.tx_isolation;
+
+mysql> select @@global.tx_isolation;
++-----------------------+
+| @@global.tx_isolation |
++-----------------------+
+| READ-UNCOMMITTED      |
++-----------------------+
+
+2、第二级别：读已提交read committed
+  set global transaction isolation level read committed;
++-----------------------+
+| @@global.tx_isolation |
++-----------------------+
+| READ-COMMITTED        |
++-----------------------+
+
+3、第三级别：repeatable read
+  set global transaction isolation level repeatable read;
+
+4、第四级别：序列化
+  set global transaction isolation level serializable;
+
+  事务是在java程序中完成的
+
+
+
+
+  								    索引
+一、什么是索引？有什么用？
+  索引相当于一本书的目录，通过目录可以快速找到对应的资源。在数据库方面查询表的时候有两种检索方式：
+    第一种方式：全表扫描
+    第二种方式：根据索引检索（效率很高）
+  索引为什么可以提高检索效率呢？
+    其实最根本的原理是缩小了扫描的范围
+  索引不能乱加，索引需要维护，索引也是数据库中的对象，有维护成本，表中数据经常被修改，就不适合添加索引，因为数据一旦修改，索引需要重新排序。
+  添加索引是给某些字段添加的，如：
+  select ename,sal from emp where ename = 'SMITH';
+当ename字段上没有添加索引的时候，以上sql语句会进行全表扫描，扫描ename字段中所有的值
+当ename字段上添加索引的时候，以上sql语句会根据索引扫描，快速定位
+二、什么时候加索引？（满足什么条件）
+  *数据量庞大（根据客户的需求，根据线上的环境）
+  *该字段很少的DML操作（因为字段进行修改操作的话，索引也需要维护）
+  *该字段经常在where字段中（经常根据哪个字段查询）
+
+三、注意：主键和具有unique约束的字段会自动添加索引。
+  根据主键查询效率较高，尽量根据主键检索
+四、查看sql语句的执行计划可以通过explain（只有MySQL可以使用）
+  例如：explain select ename,sal from emp where sal = 5000;
++----+-------------+-------+------+---------------+------+---------+------+------+-------------+
+| id | select_type | table | type | possible_keys | key  | key_len | ref  | rows | Extra       |
++----+-------------+-------+------+---------------+------+---------+------+------+-------------+
+|  1 | SIMPLE      | emp   | ALL  | NULL          | NULL | NULL    | NULL |   14 | Using where |
++----+-------------+-------+------+---------------+------+---------+------+------+-------------+
+五、怎么添加索引？
+  语法格式：
+    create index 索引名称 on 表名（字段名）
+  案例：给薪资字段添加索引：
+    create index emp_sal_index on emp(sal);
+mysql> explain select ename,sal from emp where sal = 5000;
++----+-------------+-------+------+---------------+---------------+---------+-------+------+-------------+
+| id | select_type | table | type | possible_keys | key           | key_len | ref   | rows | Extra       |
++----+-------------+-------+------+---------------+---------------+---------+-------+------+-------------+
+|  1 | SIMPLE      | emp   | ref  | emp_sal_index | emp_sal_index | 9       | const |    1 | Using where |
++----+-------------+-------+------+---------------+---------------+---------+-------+------+-------------+
+扫描数据变少了
+
+六、删除索引对象：
+  drop index 索引名称 on 表名
+
+七、索引底层采用的数据结构：B + Tree
+八、索引的底层实现原理：
+  通过B Tree缩小扫描范围，底层索引进行了排序、分区，索引会携带数据在表中的“物理地址”，
+最终通过索引检索到数据之后，获取到关联的物理地址，通过物理地址定位表中的数据，效率是最高的
+  select ename from emp where ename = 'SMITH';
+  通过索引转换为：
+  select ename from emp where 物理地址 = 0x3;
+
+九、索引的分类：
+  单一索引：给单一字段添加索引
+  复合索引：给多个字段联合起来添加1个索引
+  主键索引：主键上会自动添加索引
+  唯一索引：有unique约束的字段上会自动添加索引
+  ...
+
+十、索引什么时候失效？
+  select ename from emp where ename like '%A%';    //模糊查询不能随便用，会降低查询效率
+  模糊查询的时候，第一个通配符是百分号%，这个时候索引是失效的。
+  
+
+								视图view
+一、什么是视图？
+  站在不同的角度去看到数据（同一张表的数据，通过不同的角度去看待）
+二、怎么创建视图？怎么删除视图？
+  create view myview as select empno,ename from emp;    //后面只能写select语句
+  drop view myview;
+三、对视图进行增删改查会影响到原表数据（通过视图影响原表数据的，不是直接操作原表）
+注意：只有以DQL语句创建视图，可以用CRUD操作视图
+mysql> select * from myview;
++-------+--------+
+| empno | ename  |
++-------+--------+
+|  7369 | SMITH  |
+|  7499 | ALLEN  |
+|  7521 | WARD   |
+|  7566 | JONES  |
+|  7654 | MARTIN |
+|  7698 | BLAKE  |
+|  7782 | CLARK  |
+|  7788 | SCOTT  |
+|  7839 | KING   |
+|  7844 | TURNER |
+|  7876 | ADAMS  |
+|  7900 | JAMES  |
+|  7902 | FORD   |
+|  7934 | MILLER |
++-------+--------+
+
+创建新的视图：
+  create table emp_bak as select * from emp;
+  create view myview1 as select empno,ename,sal from emp_bak;
+  update myview1 set ename='hehe',sal=1 where empno = 7369;   //修改视图
+mysql> select * from emp_bak;     //查看原表数据，确实修改了
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | hehe   | CLERK     | 7902 | 1980-12-17 |    1.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987-04-19 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+删除：delete from myview1 where empno = 7369;
+mysql> select * from emp_bak;   //查原表数据
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987-04-19 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+
+四、视图有什么用？
+  视图可以隐藏表的实现细节，保密级别较高的系统，数据库只对外提供相关的视图，java程序员
+只对视图对象进行CRUD，视图用得不多，不会提高效率，只有保密效果
+
+
+
+								DBA命令
+了解一部分就行
+一、将数据库当中的数据导出
+  在windows的dos命令窗口中执行（不要登录进去执行）：
+    导出整个库：
+    mysqldump bjpowernode>D:\bjpowernode.sql -uroot -pso1esou1
+    翻译：导出bjpowernode到D盘的脚本上，需要用户名和密码
+  导出指定表：
+    mysqldump bjpowernode emp>D:\bjpowernode.sql -uroot -pso1esou1
+
+二、导入数据：
+  create database bjpowernode;
+  use bjpowernode;
+  source D:\bjpowernode.sql;
+
+
+
+
+
+  								数据库设计三范式*****
+重点内容，面试经常问
+一、什么是设计范式？
+  设计表的依据，按照这个三范式设计的表不会出现数据冗余
+
+二、三范式都是哪些？
+  第一范式：任何一张表都应该有主键，并且每一个字段原子性不可再分。
+  第二范式：第二范式建立在第一范式之上。所有非主键字段完全依赖主键，不能产生部分依赖
+    口诀：多对多？三张表，关系表两个外键
+    t_student学生表
+    sno(pk)     sname
+    ------------------------------
+    1		张三
+    2		李四
+    3		王五
+
+    t_teacher讲师表
+    tno(pk)     tname
+    ------------------------------
+    1		王老师
+    2		张老师
+    3		李老师
+
+    t_student_teacher_relation 学生讲师关系表
+    id(pk)      sno(fk)       tno(fk)
+    ------------------------------------
+    1		1		3
+    2		1		1
+    3		2		2
+    4		2		3
+    5		3		1
+    6		3		3
+
+  第三范式：建立在第二范式的基础之上的。所有非主键字段直接依赖主键，不能产生传递依赖
+   口诀：一对多，两张表，多的表加外键
+   班级t_class
+   cno(pk)       cname
+   ----------------------------------------
+   1		  班级1
+   2		  班级2
+
+   学生t_student
+   sno(pk)       sname           classno(fk)
+   ----------------------------------------
+   101		  张1              1
+   102		  张2              1
+   103		  张3              2
+   104		  张4              2
+   105		  张5              2
+   
+ 提醒：***在实际的开发中，以满足客户需求为主，有时候会拿冗余换执行速度（表越多，执行效率越慢）
+
+
+
+
+
+
+ 
+ 
+ 
+ 一对一怎么设计？
+ 一对一设计有两种方案：
+    第一种、主键共享：
+   t_user_login 用户登录表  
+   id(pk)      username      password
+   -----------------------------------------
+   1		zs		123
+   2		ls		456
+
+   t_user_detail 用户详细信息表
+   id(pk+fk)    realname      tel
+   -----------------------------------------
+      1		张三         111111
+      2		李四         123456
+
+    第二种、外键唯一
+   t_user_login 用户登录表  
+   id(pk)      username      password
+   -----------------------------------------
+   1		zs		123
+   2		ls		456
+
+   t_user_detail 用户详细信息表
+   id(pk)      realname      tel          userid(fk+unique)  
+   --------------------------------------------------
+      1		张三         111111	      2
+      2		李四         123456           1
