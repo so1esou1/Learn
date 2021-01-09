@@ -1,0 +1,3 @@
+﻿  ArrayTest02.c
+D:\C语言code\Clearn4.2\ArrayTest02.c(49,11): warning C4477: “printf”: 格式字符串“%p”需要类型“void *”的参数，但可变参数 3 拥有了类型“int”
+  Clearn4.2.vcxproj -> D:\C语言code\Clearn4.2\Debug\Clearn4.2.exe
