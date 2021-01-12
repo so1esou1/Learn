@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户注册的表单</title>
+	</head>
+	<body>     <!--name有就能提交，没有name就不能提交，因为提交格式都是name=value&name=value-->
+		<!--表单中，如果有一些项用户没有填写，默认提交的就是空字符串:""-->
+		<form action="http://localhost:80/crm/register" >
+			用户名<input type="text" name="username"/>   <!--value不需要程序员提供-->
+			<br>
+			密码<input type="password" name="userpwd" />  <!--value不需要程序员提供-->
+			<br>
+			性别           <!--最终提交给服务器的数据是sex=1或者sex=0-->
+				<input type="radio" name="sex" value="1"/>男  <!--性别应该有选项，这个value需要程序员指定-->
+				<input type="radio" name="sex" value="0"/>女  <!--最后提交sex和value的值，不提交男、女-->
+				<!--同一组的单选按钮name要一样，不一样的话就都能选上-->
+				<!--要默认选择某个按钮的话加checked-->
+			<br>
+			兴趣
+				<!--复选框,同一组的复选框，name也是一直的-->
+				<input type="checkbox" name="aihao" value="smoke" />抽烟     <!--value也需要程序员提供-->
+				<input type="checkbox" name="aihao" value="drink"/>喝酒
+				<input type="checkbox" name="aihao" value="firehair" checked/>烫头  <!--烫头默认被选中-->
+			<br>
+			学历
+				<!--下拉列表-->
+				<select name="xueli">    <!--假设选中专科，提交的是:xueli=zk-->
+					<option value="gz">高中</option>
+					<option value="zk">专科</option>
+					<option value="bk" selected>本科</option>       <!--默认选中本科-->
+					<option value="ss">硕士</option>
+				</select>
+			<br>
+			简介
+				<!--文本域-->    <!--value不需要写，用户填写的-->
+				<textarea rows="10" cols="60" name="jianjie" /></textarea>        
+			<br>
+			<!--提交表单-->
+			<input type="submit" value="注册" />     <!--提交按钮不能有name，不然这个按钮的value也会提交给服务器-->
+			
+			<!--重置按钮，可以重置表单-->
+			<input type="reset" value="重置" />
+			
+		</form>
+	</body>
+</html>
