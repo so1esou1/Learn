@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body background="images/花的图.jpg">                  <!--图片和背景图片的区别：图片是漂浮在浏览器上的，背景图片是嵌在浏览器上的-->
+		<!--img src = "images/血月.jpg"></img-->
+		<!--开始标签和结束标签之间没东西的话可以写成：-->
+		<img src="images/血月.jpg" width="200px"/>  <!--直接把结束标签删除，在开始标签末尾添加/-->
+		
+		<!--image标签有哪些属性呢？-->
+		<!--src属性：用来指定图片的路径-->
+		<!--width属性指定图片的宽度，高度会等比例缩放。手动设置高度的话可能会失真，尽量不去再手动设置高度-->
+		<!--鼠标悬停在图片上会出现title中的文字-->
+		<img src="images/血月.jpg" width="200px" title="这个是血月" />
+		
+		<!--alt用来指定当图片加载失败的时候的提示信息，下面代码中图片的路径写错的-->
+		<img src="im/血月.jpg" alt="图片找不到了哦!">
+	</body>
+</html>

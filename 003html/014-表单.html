@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>表单</title>
+	</head>
+	<body>
+		<!--画一个登录的表单出来-->
+		<!--此路径的意思：采用http协议，
+		访问的服务器地址是192.168.145.2，
+		访问的这个服务器上的哪个软件：8080对应的一个服务
+		crm-login是这个服务器上的某个资源名，可能是一段处理登录的java程序
+		*****重点：表单最终提交的时候，表单的name属性非常的重要，有name的才会提交，没有name是不会提交的
+		并且浏览器向服务器中提交数据的格式是？
+			url?name=value&name=value&name=value&name=value&name=value
+			以上的提交数据的格式是W3C制定的格式，所有浏览器都是这样的。灰常灰常灰常重要，必须背会，所有浏览器都是这个格式
+		以下表单提交数据的时候，格式是这样的：
+			http://192.168.145.2:8080/crm/login?x=zhangsan&y=111
+		-->
+		<form action="http://192.168.145.2:8080/crm/login">
+			<!--input是输入域，type不同，展示样式不同-->
+			用户名:<input type="text" name="x" value="zhangsan"/>       <!--text表示文本框--><!--value是用户要填的内容，平常开发时不用写出value这项-->
+			<br>
+			密码:<input type="password" name="y" value="111"/>     <!--password输入的内容会用黑点代替，防止密码外泄--><!--value是用户要填的内容，平常开发时不用写出value这项-->
+			<br>
+			<!--提交表单的按钮-->
+			<input type="submit" value="登录" />
+		</form>	
+	</body>
+</html>

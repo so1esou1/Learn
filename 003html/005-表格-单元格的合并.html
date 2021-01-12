@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>表格-单元格的合并</title>
+	</head>
+	<body>
+		<table width="50%" border="1px">
+			<tr>
+				<!--想要x和y合并--><!--纵向合并colspan，删除其中一个单元格，把其中数据写到另一个单元格中-->
+				<td>1</td>
+				<td colspan="2">xy</td>   <!--列合并，合并两个-->
+				<!--td>y</td-->
+			</tr>
+			<!--想要king和ford合并--><!--跟以上同理，写rowspan-->
+			<tr>
+				<td>1</td>
+				<td>1</td>
+				<td rowspan="2">kingford</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>1</td>
+				<!--td>ford</td-->
+			</tr>
+		</table>
+	</body>
+</html>
