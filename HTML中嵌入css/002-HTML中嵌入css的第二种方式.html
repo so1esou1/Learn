@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>定义内部样式块对象</title>
+		<!--在head标签中使用style标签，定义样式块对象-->
+		<!--type="text/css"是固定写法-->
+		<style type="text/css">             
+			/*
+				这是css的注释写法，和java类似
+			*/
+		   /*
+				这里应该写样式，怎么写？
+					选择器{
+						样式名:样式值;
+						样式名:样式值;
+						样式名:样式值;
+						样式名:样式值;
+						样式名:样式值;
+						...
+					}
+					
+				CSS中常见的选择器包括：
+					id选择器、标签选择器、class选择器。这是最常用的三种选择器，每个选择器对应不同元素
+		   */
+		  
+		  /*标签选择器*/   /*这种方式作用比较广，这个文件里所有的div(div可以换成其他标签)都会变成一样的格式*/
+		  div{
+			  background-color: cadetblue;
+			  width: 100px;
+			  height: 100px;
+			  border-color: bisque;
+			  border-style: solid;
+			  border-width: 10px;
+			  
+		  }
+		  
+		  /*想让样式作用于某一个标签，可以使用id选择器.语法格式：#id{}*/
+		  /*id选择器*//*只作用于id=username的节点*/
+		  #username{
+			  width: 400px;
+			  height: 60px;
+			  border-color: black;
+			  border-style: dotted;
+			  border-width: 1px;
+		  }
+		  
+		  /*class 类选择器*/      /*语法格式：.class{}*/
+		 
+		  
+		</style>
+	</head>
+	<body>
+		<div>
+			
+		</div>
+		<br>
+		<br>
+		<br>
+		
+		<input type="text" id="username" />
+		
+		<br>
+		<br>
+		
+		<span class="a">文本内容:span</span>
+		<p class="a">文本内容：段落p标签</p>      <!--这两个标签的class都写a的话，表示它们属于同一类标签-->
+		<!--class相同的可以看作是同一类标签，可以使用类选择器指定样式-->
+		
+		<br><br><br><br><br><br><br><br><br>
+		
+	</body>
+</html>
