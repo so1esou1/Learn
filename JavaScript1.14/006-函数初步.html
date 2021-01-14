@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>函数初步</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*回顾java中的方法：
+				[修饰符列表] 返回值类型 方法名(形式参数列表){
+					方法体;
+				}
+			
+			JavaScript中函数的定义方法：
+				function 函数名(形式参数列表){
+					函数体;
+				}
+				例如：
+					function sum(a,b){
+						return a + b;
+					}
+			*/
+		   
+		   <!--JavaScript中函数需要调用才能执行-->
+			function sum(a,b){
+				alert(a + "," + b);
+			}
+			sum();
+			
+			//调用sum函数
+			sum();    //undefined,undefined
+			sum(1);   //1,undefined
+			sum(1,2);  //1,2
+			sum(1,2,3);  //1,2
+			
+			/*JS的函数还有另一种声明方式*/
+			mysum = function(x,y){
+				return x + y;
+			}
+			var result = mysum(10,20);
+			alter(result);
+			
+			
+			//定义一个函数
+			function sayHello(username){
+				alter("欢迎" + username + "光临！");
+			}
+		</script>
+		
+		<!--在事件句柄当中调用sayHello函数-->
+		<input type="button" value="hello" onclick="sayHello('张三')" />
+	</body>
+</html>
