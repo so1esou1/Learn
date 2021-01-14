@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>内边距和外边距</title>
+		<style type="text/css">
+			#div1{
+				width: 300px;
+				height: 300px;
+				background-color: #FFE4C4;
+				border: solid 1px red;
+				/*内补丁*/
+				padding-left: 20px;       /*div1往左走*/
+			}
+			#div2{
+				width: 100px;
+				height: 100px;
+				background-color: #8A2BE2;
+				border: solid 1px red;
+				/*外补丁*/
+				margin-top: 10px;          /*在div2这个节点顶部top打一个补丁，离顶部10像素*/
+			}
+		</style>
+	</head>
+	<body>
+		<!--盒子套盒子-->
+		<div id="div1">
+			<div id="div2">
+				
+			</div>
+		</div>
+		
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>隐藏样式</title>
+		<style type="text/css" >
+			#citysOfChina{
+				display: none;    /*隐藏*/
+			}
+			input{
+				display: block;    /*显示*/
+			}
+			
+			ul{
+				list-style-type: none ;      /*这样可以去掉前面的点*/
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li>中国      <!--想让北京、天津隐藏-->
+				<ul id="citysOfChina">
+					<li>北京</li>
+					<li>天津</li>
+				</ul>
+			</li>
+			<li>美国</li>
+			<li>日本</li>
+		</ul>
+		
+		<input type="text" />
+	</body>
+</html>
