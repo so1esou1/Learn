@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>在HTML中创建JS的第一种方式</title>
+	</head>
+	<body>
+		<!--
+			1、需求：用户点击一个按钮，弹出一个对话框，对话框显示helloworld
+			2、JavaScript是一种“事件驱动型”的变成语言，通常都是在发生某件事的时候去执行某段代码
+			事件包括很多，例如鼠标单击事件click，另外还有其他事件如mouseover鼠标经过事件等，并且
+			在JavaScript中任何事件都有对应的事件句柄，例如click对应的事件句柄是onclick，mouseover
+			对应的事件句柄是onmouseover
+			3、所有的事件句柄都是以标签的属性形式存在。如以下的input button就要一个onclick这样的属性
+		-->
+		<!--事件发生三要素：事件源、事件、监听器-->	
+		<!--怎么使用JS代码弹窗？
+			在JS中有内置一个BOM对象，可以直接拿来使用，全部小写：window
+			其中window对象有一个函数叫做alert，专门用来弹出对话框
+		-->
+		<!--可以以分号结尾，也可以不以分号结尾-->
+		
+		<input type="button" value="hello1" onclick="window.alert('helloworld!');"/>   <!--JS字符串可以用单引号括起来,也可以用双引号-->
+		<!--onclick="在什么时候执行呢？"这段代码的意思是按钮只要发生了鼠标单击事件，
+		那么注册在onclick事件句柄中的JS代码会被执行！onclick后面代码实际上是浏览器负责执行的-->
+		<!--onclick后面代码并不是在浏览器打开的时候执行，浏览器打开的时候只是将这个代码注册给onclick事件句柄，然后等待click事件的发生
+		，只要发生，后面代码会被事件监听器调用-->
+		<!--点击hello之后会出现弹窗：helloworld！-->
+		<input type="button" value="hello2" onclick='window.alert("hello world!")
+													window.alert("hello kitty!")
+													window.alert("你好，中国！")'/>    <!--这三句在点击hello2后会依次执行-->
+		<!--window.可以省略-->											
+		<input type="button" value="hello3" onclick="alert('helloworld!');"/>
+		
+		<!--***事件句柄比事件多一个on，把事件句柄的on去掉就是事件！！！-->
+	</body>
+</html>

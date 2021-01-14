@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>在HTML中嵌入JS的第三种方式：引入外部独立的JS文件</title>
+	</head>
+	<body>
+		<!--引入外部独立的JS文件,JS中的文件会全部执行一遍-->
+		<script type="text/javascript" src="JS/1.js">
+		</script>
+		<!--引入第二次，虽然这个操作没有意义，会再执行一遍-->
+		<script type="text/javascript" src="JS/1.js">
+		</script>
+		
+		<script type="text/javascript" src="JS/1.js">
+			alert("hello world!~~~~~");     <!--这里的代码不会执行，引入JS文件的话，里面自己写的命令会被忽略掉-->
+		</script>
+	</body>
+</html>
+<!--css文件引入是href属性，JS文件引入是src属性，注意区分二者区别！！！-->

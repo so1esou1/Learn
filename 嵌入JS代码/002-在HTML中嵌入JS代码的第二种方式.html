@@ -1,0 +1,29 @@
+<script type="text/javascript">       <!--放到这也可以执行-->
+	alert("page begin")
+	</script>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>在HTML中嵌入JS代码的第二种方式：脚本块</title>
+	</head>
+	<body>
+		<input type="button" value="按钮1"/>
+		
+		<!--脚本块-->
+		<script type="text/javascript">    <!--type不能随便乱写-->
+			/*在这里直接编写JS代码，这些JS代码在页面打开的时候自上而下的顺序依次逐行执行！顺序很重要*/
+			alert("hello world");
+			alert("hello zhangsan");
+			alert("hello lisi");
+		</script>
+		
+		<input type="button" value="按钮2"/>   <!--按钮1和按钮2点击都没有东西的，按钮1会先加载到浏览器内存，然后是脚本块，最后是按钮2-->
+	</body>
+</html>
+
+<script type="text/javascript">       <!--放到这也可以执行-->
+	alert("page end!")
+	</script>
+	
+	/*因此，脚本块的位置随意，没有限制，并且一个页面脚本块可以出现多个*/
