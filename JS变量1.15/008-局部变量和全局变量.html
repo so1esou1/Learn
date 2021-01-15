@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>局部变量和全局变量</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+				全局变量是在函数体之外声明的变量，在浏览器打开的时候分配空间，直到浏览器关闭的时候才会销毁
+				局部变量是在函数体中声明的变量，在函数调用时分配空间，函数执行之后，内存释放
+				
+				变量声明没有赋值，系统默认赋值undefine
+				变量没有声明直接访问，这个时候会报错。
+			*/
+		   //全局变量
+		   var username = "zhangsan";
+		   //定义函数
+		   function sayhello(){
+			   //局部变量
+			   var username = "lisi";
+			   alert("welcome," + username);  //调用的局部变量的值
+			   
+			   //局部变量
+			   var i = 100;     //注意：一个变量声明时没有加var关键字，不管这个变量在哪声明的，它都是全局变量！！！
+		   }
+		   //在这里访问username
+		   alert("username = " + username)   //调用的是全局变量的值
+		   
+		   //在这里访问i变量可以吗？
+		   //不行，i已经被释放了
+		   alert(i);       //i is not defined
+		   
+		</script>
+		<input type="button" value="hello btn" onclick="sayhello()"/>
+	</body>
+</html>
