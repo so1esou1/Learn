@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>注册事件的第一种方式</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function sayhello(){
+				console.log("hello jack1")
+			}
+		</script>
+		
+		<!--这就是注册事件的第一种方式，在标签中使用“事件句柄”，在事件句柄后面编写JS代码
+			当事件句柄对应的事件发生之后，“注册”在事件句柄中的事件代码被监听器调用
+			
+			onclick鼠标单击的事件句柄，只有当鼠标单击事件click发生之后，注册在onclick后面的代码会被执行
+			
+			回调函数(callback function)：像sayhello()这样的函数在页面打开的时候并不会执行，只是在页面打开的过程中完成事件
+			的绑定，完成事件的注册，以后只有当该事件发生之后，sayhello函数才会执行
+			
+			这个回调函数的特点是：
+				监听器负责调用，程序员不负责调用。当事件发生之后，监听器才会调用该函数
+		-->
+		<input type="button" value="hello jack" onclick="sayhello()"/>
+		
+	</body>
+</html>
