@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Number类型</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+				Number类型
+					1、Number属于原始类型
+					2、Number类型都有哪些值呢？整数、浮点型、NaN、Infinity(无穷大，当除数是0时，结果是无穷大)......等
+						NaN：not a number，不是一个数字，但NaN是一个值，属于number类型
+						什么情况下结果是一个NaN呢？当一个数学表达式的结果本应该返回一个数字，但是最终无法返回一个数字的时候，结果是NaN
+					3、JavaScript中的Number类型代表了java中的byte short int long float double
+					4、在number类型这块，有一个函数叫做isNaN()，这个函数最终返回布尔类型，返回true表示不是一个数字，返回false表示是数字
+					5、isNaN()这个函数还有一个特点，它会首先尝试将数据转换成数字，如果转换失败了，则结果就是true，转换成功了结果是false
+					6、在Number类型这一块还有一个函数叫做Number()函数，这个函数的作用可以将不是数字类型的数据转换成数字类型的数据
+			*/
+		   var k = NaN;
+		   console.log(typeof k);
+		   
+		   //这样的运算不符合java语法,在JS中可以计算出一个结果
+		   var result = 100/"中";
+		   console.log(result);   //NaN
+		   
+		   var v = 100/0;
+		   console.log(v);   //Infinity
+		   
+		   var x = 100 + "中";
+		   console.log(x);     //+号可以做字符串拼接，结果是100中
+		   
+		   function sum(x,y){
+			   //console.log(typeof x);
+			   //console.log(typeof y);
+			   //console.log(isNaN(x));   //false，true被转换成数字1了
+			   //console.log(isNaN(y));   //false
+			   if(isNaN(x) || isNaN(y)){
+				   alert("对不起，参与求和的数据必须都是数字！");
+			   }else{
+				   alert(x + y);
+			   }
+		   }
+		   
+		   alert(Number("123") + 1)    //124
+		   
+		   //7、parseInt()函数可以将双引号中的字符串转换成数字并取整数位
+		   //需求：将以上字符串“123.456”转换成数字并且值取整数位
+		   var s1 = "123.456";
+		   var num = parseInt(s1);
+		   console.log(num);    //123
+
+		   var s2 = "123.456hehe";
+		   var num2 = parseInt(s2);
+		   console.log(num2);   //结果是123
+		   
+		   var s3 = "hehe123.456";
+		   var num3 = parseInt(s3);
+		   console.log(num3);   //这样不行
+		   
+		   //8、向上取整。使用JS内置的Math数学类，Math数学类中有一个函数叫做ceil()，可以向上取整
+		   console.log(Math.ceil(123.456))    //124
+		   
+		   //JS中10/3最终结果是double类型
+		   console.log(10 / 3);
+		   
+		</script>
+			
+			<input type="button" value="sum" onclick="sum(true,100)"/>   //false false
+			<input type="button" value="sum" onclick="sum('中国',100)"/>   //true false
+			<input type="button" value="sum" onclick="sum('123',100)"/>   //false false
+	</body>
+</html>

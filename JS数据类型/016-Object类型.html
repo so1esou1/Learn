@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Object类型</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+			Object类型：
+				1、在JS中内置了一个类型Object，可以将Object类型看作是所有对象的超类/基类
+				2、在JS中默认定义的类型，没有特殊说明的话，默认继承
+				3、Object类中有哪些通用的属性和方法呢？
+					属性：
+						prototype属性 |constructor属性
+					方法：
+						toLocaleString方法 |toString方法 |valueOf方法
+					重点掌握：prototype属性（prototype：原型），这个属性可以给对象动态扩展属性和方法	
+		*/
+	   var o = new Object();
+	   console.log(typeof o);
+	   
+	   //演示prototype属性(方法的写法很怪)
+	   //后期给Object对象扩展一个doSome方法
+	   Object.prototype.doSome = function(){
+		   console.log("测试prototype属性")
+	   }
+	   
+	   //后期给Object类型的对象扩展一个username属性
+	   Object.prototype.username = "zhangsan";
+	   
+	   //调用doSome方法
+	   o.doSome();
+	   
+	   console.log(o.username);
+	   
+	   //给String对象扩展一个mysubstr的方法：
+	   String.prototype.mysubstr = function(startIndex,length){
+		   //this表示当前的字符串对象
+		   return this.substr(startIndex,length);
+	   }
+	   
+	   console.log("abcdef".mysubstr(2,3));    //cde
+		</script>
+		
+	</body>
+</html>

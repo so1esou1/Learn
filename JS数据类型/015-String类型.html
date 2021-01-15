@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>String类型</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+				String类型：
+					1、原始类型
+					2、JS中怎么定义字符串？
+						var s = "字符串";
+						var s = '字符串';
+						var s = new String("字符串");
+					3、在JS中提供了创建字符串的两种方式
+						采用var s = "字符串";方式创建的字符串就属于原始类型
+						采用var s = new String("字符串");方式创建的字符串属于Object类型，这里使用了Object类的子类String类
+					4、JS中不管是原始类型的字符串还是Object类型的字符串，它们的方法和属性都是通用的
+					5、String方法的常用属性和方法：
+						length属性，获取字符串长度
+						charAt方法，获取指定下标位置
+						concat方法，连接字符
+						indexOf方法，获取某个字符串在当前字符串中第一次出现处的索引
+						lastIndexOf方法，获取某个字符串在当前字符串中最后一次出现处的索引
+						replace方法，替换
+						split方法，拆分字符串
+						substr方法，截取字符串
+						substring方法，截取字符串
+						toLowerCase方法，转小写
+						toUpperCase方法，转大写
+			*/
+		   var s1 = "abc";
+		   console.log(typeof s1);    //"string"
+		   
+		   var s2 = new String("hello");
+		   console.log(typeof s2);    //"object"
+		   
+		   console.log("abcdef".length);   //6
+		   console.log("http://www.baidu.com".charAt(3));    //p
+		   console.log("abc".concat("def"));   //abcdef
+		   console.log("username=zhangsan&password=123".indexOf("="));
+		   console.log("username=zhangsan&password=123".lastIndexOf("="));
+		   console.log("1980-10-11".replace("-",","));   //1980,10-11   replace只能替换第一个，想替换所有需要使用正则表达式
+		   
+		   //拆分字符串返回一个数组
+		   var arr = "1980-11-12".split("-");   //JS中不写成var[] arr
+		   for(var i = 0;i < arr.length;i ++){
+			   console.log(arr[i]);   //需要下标时跟java一样
+		   }
+		   
+		   //对于substr和substring来说，只有一个参数的时候没有区别
+		   console.log("abcdef".substr(2));    //cdef
+		   console.log("abcdef".substring(2));   //cdef
+		   
+		   console.log("abcdef".substr(2,3));    //cde,substr(startindex,length)，起始坐标和长度
+		   console.log("abcdef".substring(2,3));   //c,substring(startindex,endindex),起始坐标和结束坐标，不包括endindex
+		   
+		   console.log("ABCDEF".toLowerCase());
+		   console.log("ABCDEF".toUpperCase());
+		</script>
+	</body>
+</html>

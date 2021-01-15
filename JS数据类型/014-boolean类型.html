@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>boolean类型</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+				Boolean类型：
+				1、原始类型
+				2、只有两个值，truefalse
+				3、函数：Boolean()函数，这个函数作用是将不是布尔类型的转换成布尔类型
+			*/
+		   console.log(Boolean(1));    //true
+		   console.log(Boolean(0));		//false
+		   console.log(Boolean("abc"));      //true
+		   console.log(Boolean("中国"));		//true
+		   console.log(Boolean(""));		//false
+		  
+		   console.log(Boolean(NaN));		//false
+		   console.log(Boolean(Infinity));    //true
+		   
+		   console.log(Boolean(null));		//false
+		   console.log(Boolean(Object));    //true
+		   
+		   console.log(Boolean(undefined));		//false
+		   
+		   //转换规律:只要有东西，结果就是true
+		   
+		   //Boolean()函数在JS中会被隐式调用，程序员不需要手动调用的
+		   var username = "";
+		   if(Boolean(username)){                 //Boolean()一般不写
+			   console.log("welcome," + username)
+		   }else{
+			   console.log("对不起用户名不能为空！")
+		   }
+		   //if后面只能跟true和false，如果不是true、false，JS会自动隐式调用Boolean()函数进行类型转换
+		   
+		</script>
+	</body>
+</html>
