@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>事件的最后一个完美的案例，以后大家最好都这样写代码</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//这段代码有三个回调函数
+			//最外层的回调函数是在load函数发生之后才会执行
+			
+			window.onload = function(){
+				//相当于给id="btn1"的元素绑定鼠标单击
+				var btn1Elt = document.getElementById("btn1");
+				btn1Elt.onclick = function(){  //btn1被单击click之后执行这个回调函数
+					console.log("按钮1被单击了！");
+				}
+				//给id="btn2"的元素绑定鼠标单击
+				var btn2Elt = document.getElementById("btn2");
+				btn2Elt.onclick = function(){  //btn2被单击click之后执行这个回调函数
+					console.log("按钮2被单击了！");
+				}
+				/*
+				document.getElementById("username").onblur = function(){
+					console.log("失去焦点了");
+				}
+				*/
+			}
+		</script>
+		
+		<input type="button" id="btn1" value="按钮1" />
+		<br>
+		<input type="button" id="btn2" value="按钮2" />
+		<br>
+		<!--  <input type="text" id="username" />   -->
+	</body>
+</html>

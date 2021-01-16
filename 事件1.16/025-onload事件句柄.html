@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>onload事件句柄</title>
+	</head>
+	<!--页面加载完毕之后监听器调用myfun()函数-->
+	<!--<body onload="myfun()">
+		
+		<script type="text/javascript">
+			
+			
+			function myfun(){
+				console.log("myfun execute!");  //"页面加载过程中!"执行之后再执行"myfun execute!"
+			}
+			
+		</script>
+		
+	</body>    
+	
+</html>    
+<script type="text/javascript">
+	alert("页面加载过程中!");
+</script>   -->
+
+
+<!--这是上面的改进后的写法-->
+<body>
+		
+		<script type="text/javascript">
+
+			function myfun(){
+				console.log("myfun execute!");  //"页面加载过程中!"执行之后再执行"myfun execute!"
+			}
+			
+			//这行代码执行的作用是将回调函数myfun在页面打开时注册到load事件上
+			//当页面全部加载完毕，会发生load事件，发生之后监听器负责调用回调函数myfun()
+			window.onload = myfun;
+			//也可以给body一个id值，然后通过id来调用(document对象onload)，不过那种方法比这样写麻烦一点
+			
+		</script>
+		
+	</body>
+	
+</html>
+<script type="text/javascript">
+	alert("页面加载过程中!");
+</script>
