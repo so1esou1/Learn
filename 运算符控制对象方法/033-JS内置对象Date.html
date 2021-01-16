@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JS内置对象Date</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+				JS内置对象Date:
+				
+			*/
+		   var time = new Date();   //获取系统当前事件
+		   console.log(time);     //Date Sat Jan 16 2021 09:13:57 GMT+0800 (中国标准时间)
+		   //进行格式转换，把以上输出改成符合我们习惯的写法
+		   //可以将年月日的信息都拿出来，然后自己拼接格式
+		   var year = time.getFullYear();    //拿年的方法,getYear方法过时，不建议使用，获取的年是两位的
+		   var month = time.getMonth();    //拿月的方法
+		   var day = time.getDay();    //拿日的方法
+		   //console.log(year + "年" + month + "月" + day + "日");  //2021年0月6日,当时日期为2021.1.16，两者不符
+		   //0-11表示1-12月份，getday获取的是星期几！！！
+		   var day1 = time.getDate();    //获取具体日的方法
+		   console.log(year + "年" + (month + 1) + "月" + day1 + "日");   //2021年1月16日
+		   
+		   //获取时分秒
+		   time.getHours();  //拿到小时
+		   time.getMinutes(); //拿到分
+		   time.getSeconds(); //拿到秒
+		   time.getMilliseconds();  //拿到毫秒
+		   
+		   //在JS中提供了一个函数tolocaleString(),可以直接转换成具有本地语言环境的日期格式，Object中的
+		   var strTime = time.toLocaleString();
+		   console.log(strTime);      //2021/1/16 上午9:23:55
+		   
+		   //***怎么获取自“1970年1月1日 00:00:00 000”到系统当前时间的总毫秒数（时间戳）?
+		   console.log(new Date().getTime());  //getTime转毫秒，结果是1610760439828
+		   
+		   
+		</script>
+	</body>
+</html>

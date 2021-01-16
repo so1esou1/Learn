@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>viod运算符</title>
+	</head>
+	<body>
+		<!--JS中的运算符除了void运算符、typeof运算符(已经讲过了)，其他的与java的一致，-->
+		<script type="text/javascript">
+			//JS运算符：算数运算符、逻辑运算符、关系运算符、位运算符、三目运算符、赋值运算符等
+			/*
+				void运算符:
+					1、语法格式：
+						void(表达式)
+						执行表达式，但不返回任何结果,即使表达式有结果，最终经过void运算后就没有结果了
+						
+			*/
+		</script>
+		
+		页面顶部
+		<br>
+		<input type="button" value="按钮" onclick="alert('hello world')" />
+		<!--添加JavaScript:之后表示后面是一段JS代码，大部分情况下，JavaScript:是可以省略的-->
+		<input type="button" value="按钮" onclick="javascript:alert('hello world')" />
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		
+		<!--1、添加href属性可以保留住超链接的样式
+			2、onclick后面可以编写JS代码，这样点击的时候JS代码执行了
+			3、执行完JS代码必须让页面不跳转！
+			4、href=""什么也不写代表当前路径，跳到当前页面了，关键时需要把这个路径废弃掉
+			5、不能直接在href=""中写void(),系统会认为这是个路径，这时候就需要用到javascript:
+			6、void里面表达式无所谓，结果是什么都行，反正经过void运算后什么也没有(也因此大部分时间可以是href="")
+		-->
+		<a href="javascript:void(1)" onclick="alert('执行JS代码了')">需求：保留住超链接的样式，并且点击我执行一段JS代码，执行完代码后保证页面不跳转！</a>
+		
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	</body>
+</html>

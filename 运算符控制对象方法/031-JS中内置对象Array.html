@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JS中内置对象Array</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+				关于JS中的数组
+					1、怎么创建数组对象？
+						两种方式
+					2、怎遍历数组？
+					
+					3、怎么修改数组中的某个元素
+					
+					4、怎么读取数组中的某个元素
+			*/
+		   
+		   //创建数组的第一种方式
+		   var a = [];    //创建一个长度为0的数组对象，java用的是大括号，JS是中括号
+		   //数组中的元素类型可以不一致
+		   var a2 = [12,3,4,5,6,false,true];
+		   //JS中数组的长度是可以变的，没有下标越界的说法
+		   console.log(a2[0]);
+		   console.log(a2[a2.length - 1]);   //数组有length属性
+		   a2[100] = 1234;
+		   console.log("数组长度=" + a2.length);   //数组长度为101，扩容了。空着的部分默认是undefined
+		   
+		   //创建数组的第二种方式
+		   var arr1 = new Array();     //创建长度为0的数组
+		   console.log(arr1.length); //0
+		   var arr2 = new Array(3);    //创建长度为3的数组
+		   console.log(arr2.length); //3
+		   var arr3 = new Array(1,2,3,54,67,7);    //创建有指定值的数组
+		   console.log(arr3.length); //6
+		   
+		   //遍历数组
+		   for(var i = 0;i < arr2.length;i ++){
+			   console.log("---->" + arr2[i]);      //3个undefined
+		   }
+		   
+		   //修改数组中某个元素
+		   arr3[3] = 45;
+		   
+		   
+		   
+		</script>
+	</body>
+</html>

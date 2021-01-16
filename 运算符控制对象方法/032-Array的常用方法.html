@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Array的常用方法</title>
+	</head>
+	<body>
+		<!--push\pop\reverse\join-->
+		<script type="text/javascript">
+			//创建一个长度为0的数组对象
+			var a = [];
+			//添加元素push,加在末尾
+			a.push(100);
+			a.push(200);
+			a.push(300);
+			a.push(10);
+			a.push(20);
+			console.log("数组中元素的个数：" + a.length);
+			
+			a = [1,2,3];
+			a.push(false);
+			for(var i in a){         //for in语句
+				console.log(a[i]);
+			}
+			
+			//pop方法，可以把末尾的元素弹出，并且返回弹出的那个元素的值：
+			console.log(a.length);   //4
+			console.log(a.pop());    //false，末尾弹出的元素
+			console.log(a.length);   //3
+			
+			//注意：数组的push和pop方法联合起来，实际上是模拟了栈数据结构
+			var arr = [];
+			arr.push(1);
+			arr.push(2);
+			arr.push(3);
+			console.log(arr.pop());   //3
+			console.log(arr.pop());   //2
+			console.log(arr.pop());   //1    进去和出来的顺序相反，符合栈的数据结构
+			
+			//翻转数组：reverse
+			var array = [1,5,65,6,67];
+			array.reverse();
+			for(var i in array){
+				console.log("%%%===>" + array[i]);   //元素顺序翻转了
+			}
+			
+			//连接join,将数组中每个元素以美元符号连接成字符串：
+			var str = array.join("$");
+			console.log(str);       //67$6$65$5$1
+			
+			//
+		</script>
+	</body>
+</html>
