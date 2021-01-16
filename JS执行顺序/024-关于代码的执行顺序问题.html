@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>如何解决023中的问题</title>
+	</head>
+	<!--使用load事件解决顺序问题，load只有在页面上所有东西都加载完之后才会执行-->
+	<!--<body onload="这里的元素在执行的时候，页面中的元素肯定全部加载完了">-->
+	<body onload="pageLoad()">
+		<script type="text/javascript">
+			function pageLoad(){     //放到一个函数中
+				var btnElt = document.getElementById("btn");
+				btnElt.onclick = function(){
+					console.log("按钮被点击了，匿名函数执行！")
+				}
+			}
+			
+			
+		</script>
+		<input type="button" value="hello" id="btn" />
+	</body>
+</html>
