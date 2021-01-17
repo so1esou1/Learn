@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>***复选框的全选和取消全选(注意理解，有点麻烦)</title>
+	</head>
+	<body>
+		<input type="checkbox" id="firstChk"/>全选         <!--第一个复选框的结果是true是false很重要-->
+		
+		<script type="text/javascript">
+			//页面加载完毕之后
+			window.onload = function(){
+				//给id=firstChk元素绑定click
+				var firstChkElt = document.getElementById("firstChk");
+				firstChkElt.onclick = function(){
+					//获取到所有复选框对象,使用getElementsByName()方法
+					var aihaos = document.getElementsByName("aihao");
+					//console.log(aihaos.length);   //3
+					
+					//checked属性可以设置或返回checkbox是否被选中
+					if(firstChkElt.checked){       //get复选框的选中状态
+						//遍历数组
+						for(var i = 0;i < aihaos.length;i ++){
+							var aihaoChk = aihaos[i];
+							aihaoChk.checked = true;      //set复选框的选中状态为true
+						}
+					}else{
+						//遍历数组
+						for(var i = 0;i < aihaos.length;i ++){
+							var aihaoChk = aihaos[i];
+							aihaoChk.checked = false;      //set复选框的选中状态为true
+						}	
+					}										     					
+				}
+			}
+		</script>
+		
+		<input type="checkbox" name="aihao" value="smoke" />抽烟
+		<br>
+		<input type="checkbox" name="aihao" value="drink" />喝酒
+		<br>
+		<input type="checkbox" name="aihao" value="tangtou" />烫头
+		<br>
+		
+	</body>
+</html>

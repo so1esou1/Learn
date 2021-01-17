@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>获取下拉列表选中项的value</title>
+	</head>
+	<body>
+		<!--
+			数据库表存储省份和市区数据
+			t_province
+			code(pk)         name
+			---------------------------------------
+			001 			  山东省
+			002 			  山西省
+			
+			t_city
+			code(pk)		  name  		pcode(fk)
+			----------------------------------------
+			1 				  济南			  001
+			2 				  烟台 			  002
+			
+			只要前端浏览器能够获取到山东省的code，假设code=001
+			那么后台java程序执行sql语句的时候这样执行：
+				select * from t_city where pcode = ?;
+				ps.setString(1,"001");
+		
+		-->
+		
+		<select id="province" onchange="alert(this.value)">   <!--onchange的事件只要发生改变就执行里面的代码，this代表当前下拉列表对象-->
+			<option value="">--请选择省份--</option>
+			<option value ="001">河北省</option>
+			<option value ="002">河南省</option>
+			<option value ="003">山东省</option>
+			<option value ="004">山西省</option>
+		</select>
+		
+		<!--换一种写法-->
+		<script type="text/javascript">
+			window.onload = function(){
+				document.getElementById("province2").onchange = function(){
+					console.log(this.value);
+				}
+			}
+		</script>
+		<select id="province2">
+			<option value="">--请选择省份--</option>
+			<option value ="001">河北省</option>
+			<option value ="002">河南省</option>
+			<option value ="003">山东省</option>
+			<option value ="004">山西省</option>
+		</select>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>*****重点+难点：拼接HTML的方式，设置table的tbody(非常具有代表性的案例，多敲多练)</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//从java传过来一个JSON格式的字符串
+			var fromJava = "{\"total\" : 3,\"students\" : [{\"name\":\"张三\",\"age\":20},{\"name\":\"李四\",\"age\":19},{\"name\":\"王五\",\"age\":18}]}";
+			
+			window.onload = function(){
+				document.getElementById("displaybtn").onclick = function(){
+					//解析上面的JSON格式的字符串，将解析出来的数据放到tbody中
+					//转换JSON对象
+					window.eval("var json = " + fromJava);  //json对象有了,这里定义的json对象
+					//设置总记录条数
+					document.getElementById("totalspan").innerHTML = json.total;
+					//拼接HTML
+					var studentArray = json.students;
+					var html = "";    //空的字符串
+					for(var i = 0;i < studentArray.length;i ++){
+						var s = studentArray[i];
+						html += "<tr>";
+						html += "<td>"+(i + 1)+"</td>";
+						html += "<td>"+s.name+"</td>";
+						html += "<td>"+s.age+"</td>";
+						html += "</tr>";
+					}
+					//将以上拼接的HTML设置到tbody中
+					document.getElementById("stutbody").innerHTML = html;
+				}
+			}
+			
+		</script>
+		
+		<input type="button" value="查看学生信息列表" id="displaybtn"/>
+		<!--需求：点击“查看学生信息列表”，下面的学生信息就从0变成2了-->
+		<hr >
+		
+		<table border="1px" width="40%">
+			<tr>
+				<th>序号</th>
+				<th>学生姓名</th>
+				<th>学生年龄</th>
+			</tr>
+			<tbody id="stutbody">
+				<!--<tr>
+					<td>1</td>
+					<td>张三</td>
+					<td>20</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>李四</td>
+					<td>22</td>
+				</tr> -->
+			</tbody>
+		</table>
+		总记录条数：<span id="totalspan">0</span>条
+	</body>
+</html>
+<!--*****以后的开发就行这样，从数据库中取数据，java负责拼接数据成字符串，给了浏览器先把json格式字符串转换成json对象
+	，然后解析json对象中的数据，拼接HTML字符串，放到前端上做展示，这样才叫动态网页技术-->

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>***改进36的代码写法</title>
+	</head>
+	<body>
+		<input type="checkbox" id="firstChk"/>全选         <!--第一个复选框的结果是true是false很重要-->
+		
+		<script type="text/javascript">
+			
+			window.onload = function(){
+				
+				//改良代码，写成一个for循环
+				var firstChkElt = document.getElementById("firstChk");
+				var aihaos = document.getElementsByName("aihao");
+				
+				firstChkElt.onclick = function(){
+					for(var i = 0;i < aihaos.length;i ++){
+						var aihaoChk = aihaos[i];
+						aihaoChk.checked = firstChkElt.checked;   						
+					}														     					
+				}
+				
+				//给每一个name="aihao"复选框绑定鼠标单击事件（想让单击单个事件，全选栏也会跟着改变）
+				for(var i =0;i < aihaos.length;i ++){
+					aihaos[i].onclick = function(){
+						//第一个复选框选中还是不选择取决于所有的aihao复选框总数量是否和总选中数量是否相同
+						//总数量
+						var count = aihaos.length;
+						var checkedCount = 0;
+						//对选中的数量进行循环
+						for(var i = 0;i < aihaos.length;i ++){
+							if(aihaos[i].checked){
+								checkedCount ++;
+							}							
+						}   //循环结束之后，所有的被选中的复选框就统计完了
+						//第一个复选框是选中还是取消选中呢？
+						firstChkElt.checked = (count == checkedCount);
+					}
+				}
+			}
+		</script>
+		
+		<input type="checkbox" name="aihao" value="smoke" />抽烟
+		<br>
+		<input type="checkbox" name="aihao" value="drink" />喝酒
+		<br>
+		<input type="checkbox" name="aihao" value="tangtou" />烫头
+		<br>
+		
+	</body>
+</html>
