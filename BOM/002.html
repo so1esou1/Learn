@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		002页面
+		<script type="text/javascript">
+			//将002窗口设置成顶级窗口
+			
+			function setTop(){
+				if(window.top != window.self){
+					window.top.location = window.self.location;
+					//window.self.location是002的地址，将顶级窗口的window.top.location地址设置为005
+				}
+			}
+		</script>
+		
+		<input type="button" onclick="setTop()" value="如果当前窗口不是顶级窗口的话,将当前窗口设置为顶级窗口" />
+		
+		
+	</body>
+</html>
