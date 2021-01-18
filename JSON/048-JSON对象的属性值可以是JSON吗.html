@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JSON对象的属性值可以是JSON吗</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*var addr = {
+				"city" : "北京",
+				"street" : "大兴"
+			}
+			
+			var user = {
+				"username" : "zhangsan",
+				"password" : "123",
+				"email" : "zhangsan@qq.com",
+				"address" : addr        //addr就是JSON对象
+			}*/
+			//合并以上代码：
+			var user = {
+				"username" : "zhangsan",
+				"password" : "123",
+				"email" : "zhangsan@qq.com",
+				"address" :  {
+				"city" : "北京",
+				"street" : "大兴",
+				}
+			}
+			
+			//zhangsan住在哪个城市，怎么访问？
+			console.log(user.username + "居住在" + user.address.city);
+		</script>
+	</body>
+</html>
