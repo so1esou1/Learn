@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--导入jquery的方法：-->
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
+
+    <script type="text/javascript">
+        /*用script实现HelloWorld：
+        window.onload = function () {
+            var btnObj = document.getElementById("btnId");
+            btnObj.onclick = function (){
+                alert("js 原生的单击事件");
+            }
+        }*/
+
+        //验证jquery是否导入：
+        alert($);/*有值：function( selector, context ) {
+		// The jQuery object is actually just the init constructor 'enhanced'
+		// Need init if jQuery is called (just allow error to be thrown if not included)
+		return new jQuery.fn.init( selector, context );
+	}     说明jquery导入成功了
+	*/
+
+        //jquery写法示范：
+        $(function () {       //表示页面加载完成之后，相当于onload事件
+            var $btnObj = $("#btnId");      //表示按id查询标签对象
+            $btnObj.click(function () {     //绑定单击事件
+                alert("jQuery的单击事件");
+            });
+        });
+
+    </script>
+
+</head>
+
+<body>
+<button id="btnId">HelloWorld</button>
+</body>
+
+</html>

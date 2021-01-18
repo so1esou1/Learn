@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        //$作用一、当传入参数是函数时，表示页面加载完毕之后
+        $(function () {
+            alert("页面加载完成之后，自动调用");
+
+            //$作用二、传入参数是HTML字符串时，会帮我们创建这些HTML标签对象
+            $("    <div>" +
+                "       <span>div-span1</span>" +
+                "       <span>div-span2</span>" +
+                "   </div>").appendTo("body");      //直接把div这个标签在body中创建了
+
+            //$作用三、传入的参数是“选择器字符串”的时，
+                //1、$("#id属性值");   id选中器根据id查询标签对象
+                //2、$("标签名")；     根据指定的标签名查询标签对象
+            alert($("button").length);    //3
+                //3、$(.class 属性值);   类型选择器，可以根据class属性查询标签对象
+
+            //$作用四、传入参数是DOM对象时，会把这个DOM对象转化为jQuery对象
+            var btnObj = document.getElementById("btn01");
+            alert(btnObj);    //[object HTMLButtonElement]
+            alert( $(btnObj));    //[object Object]  这个是jQuery对象
+        })
+
+
+
+
+
+    </script>
+
+</head>
+<body>
+    <button id="btn01">按钮1</button>
+    <button>按钮2</button>
+    <button>按钮3</button>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        /*$(function () {
+            var arr = [12,"abc",true];
+            var $btns = $("button");
+
+            for(var i = 0;i < $btns.length;i ++){
+                alert($btns[i]);
+            }
+        })*/
+        //jQuery对象是DOM对象的数组+jQuery提供的一系列功能函数
+
+        //document.getElementById("testDiv").innerHTML = "这是DOM对象的属性InnerHTML";
+        //$("#testDiv").innerHTML = "这是DOM对象的属性InnerHTML"     DOM对象的方法如innerHTML，jQuery用不了的
+
+        $("#testDiv").click(function () {
+            alert("click()是jQuery对象的方法");
+        });
+        //jquery对象不能使用DOM对象的属性和方法，DOM对象也不能使用jQuery对象的属性和方法
+
+    </script>
+</head>
+<body>
+    <div id="testDiv">Atguigu is Very Good!</div>
+
+    <button id="dom2dom">使用DOM对象调用DOM方法</button>
+    <button id="dom2jQuery">使用DOM对象调用jQuery方法</button>
+    <button id="jQuery2jQuery">使用jQuery对象调用jQuery方法</button>
+    <button id="jQuery2dom">使用jQuery对象调用DOM方法</button>
+
+</body>
+</html>
