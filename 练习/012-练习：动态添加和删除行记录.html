@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            //给submit按钮绑定单击事件
+            $("#addEmpButton").click(function () {
+                //获取输入框，姓名、邮箱、薪资的内容
+                var name = $("#empName").val();
+                var email = $("#email").val();
+                var salary = $("#salary").val();
+
+
+                //创建一个行标签对象，添加到显示数据的表格中
+                //并在这里拼接
+                var $trObj = $("        <tr>" +
+                    "            <td>" + name + "</td>" +
+                    "            <td>" + email + "</td>" +
+                    "            <td>" + salary + "</td>" +
+                    "            <td><a href=\"deleteEmp?id-002\">Delete</a> </td>" +
+                    "        </tr>");
+                //添加到显示数据的表格中
+                $trObj.appendTo($("#employeeTable"));
+
+                //给添加的行的a标签绑上事件
+                $trObj.find("a").click(function () {
+                    //此处复制一下下面的代码，讲解见下面代码
+                    var $trObj = $(this).parent().parent();
+                    var name = $trObj.find("td:first").text();
+                    if(confirm("你确定要删除[" + name + "]吗？")){
+                        $trObj.remove();
+                    }
+                    return false;
+                });
+            });
+
+
+            //删除delete,给删除的a标签绑定标签事件
+            $("a").click(function () {
+                //这里的a标签只给最初3个元素绑定了，后面手动添加的没绑定，所以删除时依然会跳到404，需要在表格事件里通过find绑定添加行的a
+                //事件响应的function函数中，有一个this对象，这个this对象是当前正在响应事件的DOM对象
+                var $trObj = $(this).parent().parent();     //取两次父元素
+
+                var name = $trObj.find("td:first").text();                //find()---返回匹配给定选择器的后代元素
+
+                //confirm是JavaScript语言提供的确认提示框函数，给他传什么，他就提示什么
+                //当用户点击了确定就返回true。当用户点击了取消就返回false，根据返回的结果来操作
+                if(confirm("你确定要删除[" + name + "]吗？")){
+                    //行对象.remove();
+                    //行对象用this代替
+                    $trObj.remove();
+
+                }
+                //return false可以阻止元素的默认行为，在这里可以阻止删除后页面跳转到404
+                return false;
+            });
+        });
+
+
+
+
+    </script>
+
+</head>
+<body>
+    <table id="employeeTable">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Tom</td>
+            <td>tom@tom.com</td>
+            <td>5000</td>
+            <td><a href="deleteEmp?id-001">Delete</a> </td>
+        </tr>
+        <tr>
+            <td>Jerry</td>
+            <td>Jerry@sohu.com</td>
+            <td>8000</td>
+            <td><a href="deleteEmp?id-002">Delete</a> </td>
+        </tr>
+        <tr>
+            <td>Bob</td>
+            <td>bob@tom.com</td>
+            <td>10000</td>
+            <td><a href="deleteEmp?id-003">Delete</a> </td>
+        </tr>
+    </table>
+
+    <div id="formDiv">
+        <h4>添加新员工</h4>
+
+        <table>
+            <tr>
+                <td class="word">name:</td>
+                <td class="inp">
+                    <input type="text" name="empName" id="empName">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="word">email:</td>
+                <td class="inp">
+                    <input type="text" name="email" id="email">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="word">salary:</td>
+                <td class="inp">
+                    <input type="text" name="salary" id="salary">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button id="addEmpButton" value="abc">
+                        Submit
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
