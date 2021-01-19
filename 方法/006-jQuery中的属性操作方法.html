@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //html()方法的示范：
+            //不传参数是获取，传递参数是设置
+            alert($("div").html());   //获取
+            $("div").html("<h1>我是div中的标题1</h1>");    //设置
+
+            //text()方法的示范：
+            //不传参数是获取，传递参数是设置
+            alert($("div").text());   //获取
+            $("div").text("<h1>我是div中的标题1</h1>");    //设置
+
+            //val()方法的示范（用于表单项）：
+            $("button").click(function () {
+                alert($("#username").val());   //获取
+                $("#username").val("超级程序员");        //设置
+            });
+
+
+        })
+
+    </script>
+</head>
+<body>
+    <div>我是div标签 <span>我是div中的span</span></div>
+    <input type="text" name="username" id="username" />
+    <button>操作输入框</button>
+</body>
+</html>

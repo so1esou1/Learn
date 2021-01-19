@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            //attr()
+            //传一个参数的时候表示获取指定参数的属性值，传两个表示要设置属性值
+            alert($(":checkbox:first").attr("name"));       //获取值
+            $(":checkbox:first").attr("name","abc");        //设置值
+
+            alert($(":checkbox").attr("checked"));         //返回undefined，不容易分清是未选择还是未定义，prop专门解决这一问题
+
+            //attr()方法比较强大，还可以操作自定义的属性，如：abc、bbj
+            //$(":checkbox:first").attr("abc","abcValue");
+
+            //prop()
+            alert($(":checkbox").prop("checked"));         //返回false
+
+            //$(":checkbox").prop("checked",true);这样写的话选项都选中
+            //$(":checkbox").prop("checked",false);这样写的话选项都不选中
+
+        });
+    </script>
+</head>
+
+<body>
+单选：
+<input name="radio" type="radio" value="radio1"/> radio1
+<input name="radio" type="radio" value="radio2"/> radio2
+<br>
+多选
+<input name="checkbox" type="checkbox" value="checkbox1" />checkbox1
+<input name="checkbox" type="checkbox" value="checkbox2" />checkbox2
+<input name="checkbox" type="checkbox" value="checkbox3" />checkbox3
+<br>
+
+下拉多选：
+<select id="multiple" multiple="multiple" size="4">
+    <option value="mul1">mul1</option>
+    <option value="mul2">mul2</option>
+    <option value="mul3">mul3</option>
+    <option value="mul4">mul4</option>
+</select>
+<br>
+
+下拉单选：
+<select id="single">
+    <option value="sin1">sin1</option>
+    <option value="sin2">sin2</option>
+    <option value="sin3">sin3</option>
+</select>
+</body>
+</html>
