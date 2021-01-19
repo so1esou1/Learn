@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        div,span,p{
+            width: 140px;
+            height: 140px;
+            margin:5px;
+            background: #aaa;
+            border: #000 1px solid;
+            float: left;
+            font-size: 17px;
+            font-family: Verdana;
+        }
+        div.mini{
+            width: 55px;
+            height: 55px;
+            background-color: #aaa;
+            font-size: 12px;
+        }
+        div.hide{
+            display:none;
+        }
+    </style>
+
+
+    <<script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {        //这段代码是 $(function() {});的全写
+
+            //1、选择body内所有的div元素（body的后代中的div）
+            $("#btn1").click(function () {
+                $("body div").css("background","#bbffaa");
+            });
+
+            //2、在body内，选择div子元素
+            $("#btn2").click(function () {
+                $("body > div").css("background","#bbffaa");
+            });
+
+            //3、选择id为one的下一个div元素
+            $("#btn3").click(function () {
+                $("#one+div").css("background","#bbffaa");
+            })
+
+            //4、选择id为two的元素后面的所有div兄弟元素
+            $("#btn4").click(function () {
+                $("#two~div").css("background","#bbffaa");
+            })
+        });
+
+        //jQuery中的val()方法可以操作表单项的value属性值，可以设置和获取。不管可用不可用的选框，都可以进行修改
+
+        //jQuery中提供了一些遍历元素的方法,each()方法:
+        /*
+        示例：$checkboxes.each(function(){
+            //alert($checkboxes[i].value);
+            在遍历的function函数中，有一个this对象，就是遍历到的dom对象
+            alert(this.value);    //不用程序员取，this自己取
+        })
+        */
+
+    </script>
+</head>
+
+
+
+<body>
+<input type="button" value="选择 body内所有的div元素" id="btn1" />
+<input type="button" value="在body内，选择div子元素" id="btn2" />
+<input type="button" value="选择id为one的下一个div元素" id="btn3" />
+<input type="button" value="选择所有元素" id="btn4" />
+<input type="button" value="选择所有span元素和id为two的元素" id="btn5" />
+
+<br>
+<div class="one" id="one">
+    id 为 one，class 为 one的div
+    <div class="mini">class为mini</div>
+</div>
+<div class="one" id="two" title="test">
+    id为two，class为one，title为test的div
+    <div class="mini" title="other">class为mini，title为other</div>
+    <div class="mini" title="test">class为mini，title为test</div>
+</div>
+<div class="one">
+    <div class="mini">class为mini</div>
+    <div class="mini">class为mini</div>
+    <div class="mini">class为mini</div>
+    <div class="mini"></div>
+</div>
+<div class="one">
+    <div class="mini">class为mini</div>
+    <div class="mini">class为mini</div>
+    <div class="mini">class为mini</div>
+    <div class="mini" title="tesst">class为mini,title为tesst</div>
+</div>
+
+<div style="display: none" class="none">style的display为"none"的div</div>
+<div class="hide">class为"hide"的div</div>
+<div>
+    包含input的type为"hidden"的div<input type="hidden" size="8" />
+</div>
+<span class="one" id="span">^^span元素^^</span>
+</body>
+</html>
