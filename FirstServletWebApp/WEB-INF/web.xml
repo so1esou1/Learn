@@ -1,0 +1,35 @@
+<!--Õâ¸öÎÄ¼þµÄÐ´·¨²»ÐèÒª±³£¬ÕÕ°áD:\Tomcat\apache-tomcat-8.5.61\confÖÐµÄweb.xml¸ñÊ½¾ÍÐÐ-->
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  version="3.1"
+  <!--ÕâÊÇÒ»¸öºÏ·¨µÄweb.xmlÎÄ¼þ-->
+
+<!--ÖÁÉÙÒªÐ´³ÉÕâ¸öÑù×Ó-->
+<!--Ò»¸öwebappÖ»ÓÐÒ»¸öweb.xmlÎÄ¼þ-->
+<!--web.xmlÎÄ¼þÖ÷ÒªÅäÖÃÇëÇóÂ·¾¶ºÍServletÀàÃûÖ®¼äµÄ°ó¶¨¹ØÏµ-->
+<!--web.xmlÎÄ¼þÔÚtomcat·þÎñÆ÷Æô¶¯½×¶Î±»½âÎö-->
+<!--web.xmlÎÄ¼þ½âÎöÊ§°Ü»áµ¼ÖÂwebappÆô¶¯Ê§°Ü-->
+<!--web.xmlÎÄ¼þÖÐµÄ±êÇ©²»ÄÜËæÒâ±àÐ´£¬ÒòÎªtomcat·þÎñÆ÷Ôç¾ÍÖªµÀÁË¸ÃÎÄ¼þÖÐ±àÐ´ÁËÄÄÐ©±êÇ©-->
+<!--web.xmlÎÄ¼þÖÐµÄ±êÇ©Ò²ÊÇSUN¹«Ë¾ÖÆ¶¨µÄServlet¹æ·¶-->
+<!--ÒÔÏÂÕâÐ©±êÇ©Ò²¶¼²»ÄÜÐ´´í-->
+	<servlet>
+		<servlet-name>thisIsServletName</servlet-name>
+		<servlet-class>HelloServlet</servlet-class>      <!--ÀàÃû£ºHelloServlet-->
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>thisIsServletName</servlet-name>
+
+		<url-pattern>/sssd/wqvef/rgrt/tyh</url-pattern>      <!--ÕâÀïÊÇÇëÇóÂ·¾¶£¬Â·¾¶ËæÒâ±àÐ´£¬µ«ÊÇ±ØÐëÒÔ"/"¿ªÊ¼-->
+		<!--Ö»ÊÇÒ»¸öÐéÄâÂ·¾¶£¬Ö»ÊÇ´ú±íÒ»¸ö×ÊÔ´µÄÃû×Ö-->
+		<!--ä¯ÀÀÆ÷·ÃÎÊµØÖ·µÄÐ´·¨ÊÇ:http://localhost:8080/FirstServletWebApp/sssd/wqvef/rgrt/tyh-->
+
+		<!--¿ÉÒÔÐ´¶à¸öÂ·¾¶-->
+		<url-pattern>/sasa/wqm/asub/opbv</url-pattern>
+	</servlet-mapping>
+	
+
+</web-app>
