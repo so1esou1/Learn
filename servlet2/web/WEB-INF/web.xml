@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <servlet>
+        <servlet-name>RequestAPIServlet</servlet-name>
+        <servlet-class>com.csu.servlet.RequestAPIServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RequestAPIServlet</servlet-name>
+        <url-pattern>/requestAPIServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>Servlet1</servlet-name>
+        <servlet-class>com.csu.servlet.Servlet1</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Servlet1</servlet-name>
+        <url-pattern>/Servlet1</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Servlet2</servlet-name>
+        <servlet-class>com.csu.servlet.Servlet2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet2</servlet-name>
+        <url-pattern>/Servlet2</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ForwordC</servlet-name>
+        <servlet-class>com.csu.servlet.ForwordC</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForwordC</servlet-name>
+        <url-pattern>/ForwordC</url-pattern>
+    </servlet-mapping>
+</web-app>
