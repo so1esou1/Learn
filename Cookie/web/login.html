@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <!--使用cookie机制，实现10天内免登录。cookie保存会话状态在浏览器客户端上-->
+</head>
+<body>
+    <form action="/Cookie/login" method="post">
+        用户名:<input type="text" name="username" >
+        <br>
+        密码:<input type="password" name="password">
+        <br>
+
+        <!--10天内免登录：-->
+        <input type="checkbox" name="tenDayAutoLoginFlag" value="ok"/>十天内免登录
+        <br>
+
+        <input type="submit" value="登录">
+    </form>
+</body>
+</html>
