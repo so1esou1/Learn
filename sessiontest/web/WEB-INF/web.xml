@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+
+    <servlet>
+        <servlet-name>accessMySelfSession</servlet-name>
+        <servlet-class>com.csu.servlet.AccessMySelfSession</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accessMySelfSession</servlet-name>
+        <url-pattern>/user/accessMySelfSession</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>getDataFromSession</servlet-name>
+        <servlet-class>com.csu.servlet.GetDataFromSession</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getDataFromSession</servlet-name>
+        <url-pattern>/user/GetDataFromSession</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>com.csu.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>120</session-timeout>
+    </session-config>
+</web-app>
