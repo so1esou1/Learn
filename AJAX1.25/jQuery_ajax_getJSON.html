@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--演示jQuery中ajax的getJSON方法-->
+    <script type="text/javascript">
+        $(function () {
+            $("#getJSONBtn").click(function () {
+                //调用
+                //url,data,callback
+                $.getJSON("http://localhost:8080/AJAX/ajaxServlet", "action=jQueryGetJSON", function () {
+
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--演示jQuery中ajax的get和post方法-->
+
+    <script type="text/javascript">
+        $(function () {
+            $("#getBtn").click(function () {
+                //url,data,callback,type
+                $.get("http://localhost:8080/AJAX/ajaxServlet", "action=jQueryGet", function () {
+
+                }, "json");
+            });
+        })
+        //post使用和get一样
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--jQuery中AJAX请求的应用示范-->
+    <script type="text/javascript" src=""></script>
+    <script type="text/javascript">
+        $(function () {
+            //ajax请求
+            $("#ajaxBtn").click(function () {
+                $.ajax({
+                    url:"http://localhost:8080/AJAX/ajaxServlet",
+                    data:"action=jQueryAjax",
+                    type:"GET",
+                    success:function (data) {      //参数是服务器返回的数据
+                        //alert("服务器返回的数据是:" + data);
+                        //var jsonObj =JSON.parse(data);
+                        $("#msg").html("编号:" + data.id + ",姓名:" + data.name);
+                    },
+                    dataType:"json"
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--serialized()表单序列化的演示-->
+    <script type="text/javascript">
+        $(function () {
+            $("#submit").click(function () {
+                //把参数序列化
+                $.getJSON("http://localhost:8080/AJAX/ajaxServlet", "action=jQuerySerialize",function () {
+                    
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>
