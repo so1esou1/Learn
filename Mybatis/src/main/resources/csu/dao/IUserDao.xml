@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csu.dao.IUserDao">
+    <!--这是映射配置文件-->
+    <!--配置查询所有-->
+    <!--有了它就有了执行的sql语句，就可以获取prepareStatement-->
+    <select id="findAll" resultType="csu.centralsouth.User">   <!--告诉mybatis返回类型，赋值到User当中-->
+        select * from user ;
+    </select>
+    <!--此配置中还有封装的实体类全限定类名-->
+</mapper>
