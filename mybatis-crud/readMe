@@ -1,0 +1,15 @@
+使用mybatis完成整张表的增删改查
+    增
+    删
+    改
+    查
+
+配置文件的名字随意，只要放置位置正确即可
+
+一般情况下连接数据库的信息最好是单独配置到属性文件中。这样用户修改的时候会比较方便
+  为了提高用户的体验，建议单独配置一个资源文件/属性文件。在类的根目录下，新建一个jdbc.properties文件，配置
+连接数据库信息，然后在核心配置文件引入该资源文件<properties resource="jdbc.properties" />，
+使用语法:<property name="driver" value="${jdbc.driver}"/>(注意:${}不是EL表达式，是mybatis中自定制的语法机制)
+${"属性文件中的key"}
+
+sqlMapper2中解析了别名机制

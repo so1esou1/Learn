@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csu.dao.IUserDao">
+
+    <!--parameterType用来专门给sql语句的?/占位符传值的，翻译为参数类型-->
+    <!--javabean给占位符传值的时候，程序员需要告诉mybatis javabean的哪个属性传到哪个占位符上-->
+    <!--且mybatis中的占位符不能使用问号，必须使用#{},并且里面需要编写javabean的属性名-->
+    <insert id="save" parameterType="com.csu.Student">     <!--这里是student的类路径-->  <!--resultType只有在select里才有-->
+        insert into tb1_student
+            (id , name , birth)
+        values
+            (#{stuId} , #{stuName} , #{stuBirth})
+    </insert>
+
+    <update id="update" parameterType="com.csu.Student">
+        update tb1_student set
+            name = #{stuName} , birth = #{stuBirth}
+        where
+            id = #{stuId}
+    </update>
+
+    <!--parameterType="简单类型"，则parameter可以省略
+        简单类型：17个：byte short int long float double boolean char
+                       Byte Short Integer Long Float Double Boolean Character String
+    -->
+    <select id="getById" parameterType="java.lang.String" resultType="com.csu.Student">
+        select
+            id as stuId,name as stuName,birth as stuBirth  <!--列名和javabean的属性名必须一致。不一致，使用别名-->
+        from
+            tb1_student
+        where
+            id = #{fdsadasas}    <!--占位符只有一个时可以随便写，mybatis可以知道表达的是哪个，mybatis自动赋值-->
+    </select>
+
+    <select id="getAll" resultType="com.csu.Student">        <!--没有参数类型-->
+        select
+            id as stuId,name as stuName,birth as stuBirth
+        from
+            tb1_student
+    </select>
+
+    <delete id="deleteById" >                  <!--参数是字符串，可以省略，没有结果返回-->
+        delete from tb1_student where id = #{fdsaasdf}
+    </delete>
+
+</mapper>
