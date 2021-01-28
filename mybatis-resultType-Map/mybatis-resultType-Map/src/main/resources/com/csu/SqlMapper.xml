@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csu.com">
+    <!--resultType可以使用简单类型，也可以使用JavaBean-->
+    <!--查询所有员工的姓名-->
+    <select id="getEnames" resultType="String">
+        select ename from emp
+    </select>
+
+    <!--查询smith的部门名称以及月薪-->
+    <select id="getByEname" resultType="Map">
+        <!--使用resultType为Map的时候，会自动将查询结果的列名作为Map集合的key-->
+        select
+            e.sal as x,d.dname as y,e.ename as z
+        from
+            emp e
+        join
+            dept d
+        on
+            e.deptno = d.deptno
+        where
+            e.name = #{ename}
+
+    </select>
+
+    <!--查询所有工作岗位是manager的员工，要求查询员工姓名以及部门名称-->
+    <select id="getByJob" parameterType="String" resultType="Map">
+        select
+            e.ename,d.dname
+        from
+            emp e
+        join
+            dept d
+        on
+            e.deptno = d.deptno
+        where
+            e.job = #{job}
+    </select>
+
+</mapper>
