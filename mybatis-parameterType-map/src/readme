@@ -1,0 +1,24 @@
+parameterType
+    1、专门给sql语句传值的
+    2、可以采用JavaBean、简单类型、Map
+    3、此工程来测试用Map给sql语句传值
+            <insert id="save" parameterType="Map">
+                insert into tb1_student
+                    (di,name,birth)
+                values
+                    (#{xuehao},#{xingming},#{shengri})  <!--注意：传值时传入map集合的key-->
+            </insert>
+    4、什么时候parameterType会采用Map传值？
+        在javabean不够用的时候可以采用map集合传值。
+        什么时候JavaBean不够用呢？
+            一般情况下都是一个表对应一个JavaBean，两张表对应两个JavaBean。
+            假设传值的时候，一些值是A表中的，一些值是B表中的，跨表的情况下，JavaBean不合适(不能因为这一条sql语句新增加一个javabean)
+            一般有合适的JavaBean的话，还是用的JavaBean，没有的话用Map的方式
+
+    在mybatis当中执行增删改查之后，打印执行sql语句:
+       可以借助第三方组件:log4j
+       logger for java:为java语言准备的日志工具
+       专门来负责记录日志，很多框架都集成了该组件，mybatis也有
+       maven直接有了吧
+
+

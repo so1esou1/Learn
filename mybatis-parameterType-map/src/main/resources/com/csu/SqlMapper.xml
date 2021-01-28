@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fdsaasdf">
+    <!--以下写法都可以
+    <insert id="save" parameterType="java.util.Map"></insert>
+    <insert id="save" parameterType="java.util.HashMap"></insert>
+    <insert id="save" parameterType="Map"></insert>
+    <insert id="save" parameterType="map"></insert>
+    -->
+    <insert id="save" parameterType="Map">
+        insert into tb1_student
+            (di,name,birth)
+        values
+            (#{xuehao},#{xingming},#{shengri})<!--传值时传入map集合的key-->
+    </insert>
+
+</mapper>
