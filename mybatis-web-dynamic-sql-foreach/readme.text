@@ -1,0 +1,30 @@
+
+1、关于mybatis中的动态sql
+包括：
+    foreach
+    where
+    if
+    ....
+2、动态sql指的是sql语句可以在mybatis中支持动态拼接
+
+3、foreach
+
+    array数组的情况:
+        <delete id="deleteByIds" >
+                delete from
+                    tb1_student
+                where
+                    id
+                in
+                    <!--('id1','id2')   这一段可以动态化-->
+                    <foreach collection="array" open="(" close=")" separator="," item="stuId">   <!--connection这里只能写是array-->
+                        #{stuId}
+                    </foreach>
+                    <!--以"("开始，以")"结束，以","隔开-->
+                    <!--item中的值可以随便写，但是最好见名知意，#{}中的值要与item值一致-->
+            </delete>
+    List集合的情况:
+        首先要知道sql语句是可以这样编写的:
+            insert into ta1_student(id,name,birth) values('1','zs','1910-11-12'),('2','ls','1910-11-12'),('3','ww','1910-11-12')
+        编写程序，模拟批量的导入
+
