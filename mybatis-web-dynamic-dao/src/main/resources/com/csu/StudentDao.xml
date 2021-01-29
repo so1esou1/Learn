@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csu.dao.StudentDao">
+    <insert id="save" parameterType="Student">
+        insert into tb1_student(id,name,birth) values(#{id},#{name},#{birth})
+    </insert>
+
+    <insert id="save2" parameterType="String">
+        insert into tb1_student(id,name,birth) values(#{arg0},#{arg1},#{arg2});
+    </insert>
+
+</mapper>

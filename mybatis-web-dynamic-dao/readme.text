@@ -1,0 +1,27 @@
+一、mybatis中dao地实现类可以不写，mybatis会利用JDK的动态代理机制动态地在内存中生成daoimpl.class字节码：
+    但是，要使用这种机制必须做到以下几个必须：
+        1、获取dao实例对象的时候，代码变了:
+            StudentDao studentDao = SqlSessionUtil.getCurrentSqlSession().getMapper(StudentDao.class);
+            这行代码只要执行，必然会在底层JVM中生成dao实现类的字节码，并且同时调用构造方法创建daoimpl的实例对象
+
+        2、在SqlMapper.xml文件中，必须使用这样固定的namespace:
+            <mapper namespace="com.csu.dao.StudentDao">
+            命名空间namespace必须是dao接口的全限定接口名，带有包名
+
+        3、Dao接口当中的方法名必须与sqlId一致(拿Dao接口的方法名作为sql语句的id)
+
+
+二、mybatis-config.xml的<mappers>里也可以写<package name="包名"> ，就像<typeAliases>取别名时一样。
+        这样这个包下所以文件都能被扫描到
+
+三、当dao接口中的方法上参数有多个的时候怎么给sql语句传值（只适合简单类型的参数【17种类型】，其他数据类型的参数不能使用）
+    这种方式不需要创建更多的类，适合比一个多，又不太多的情况，太多了还是建议封装成map、JavaBean等
+    当参数个数多于一个，少于三个，可以使用这种方式。#{arg0} #{arg1}...的方式，参数过大不建议使用，过于臃肿
+    另外，mybatis3.4之前版本不能使用#{arg0} #{arg1}...的方式,必须使用#{0} #{1} #{2}...实际开发中注意版本
+
+    parameterType：
+        可以使用JavaBean
+        可以使用Map
+        可以使用简单类型
+        也可以使用多个参数，但是参数的数据类型必须是简单类型
+
