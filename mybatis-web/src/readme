@@ -1,0 +1,43 @@
+在web项目中使用mubatis，实际上就是在Dao层使用mybatis
+    在servlet3.1中可以使用注解annotation代替web.xml配置文件
+
+    1、提供一个myBatis的工具类，叫做SqlSessionUtil工具类：
+        要编写SqlSessionUtil工具类需要了解mybatis核心对象的生命周期:
+            SqlSessionFactoryBuilder
+                这个类可以被实例化、使用和废弃，一旦创建了SqlSessionFactory，就不再需要它了
+                String resource = "org/mybatis/example/mybatis-config.xml";
+                InputStream inputStream = Resources.getResourceAsStream(resource);
+                SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);//SqlSessionFactoryBuilder直接调对象，避免使它实例化
+
+
+            SqlSessionFactory
+                一旦被创建就应该在应用的运行期间一直存在，没有任何理由丢弃它或重新创建另一个实例(必须放在静态代码块之中)
+                对于一个应用来说，整个web容器中只有一个SqlSessionFactory对象，该对象是重量级的，只能创建一次，所以应该在类加载时创建，
+                只执行一次，不允许重建、删除、销毁
+                static{
+
+                }
+
+            SqlSession
+                每个线程都应该有它自己的 SqlSession 实例。
+                SqlSession 的实例不是线程安全的，因此是不能被共享的，所以它的最佳的作用域是请求或方法作用域
+                绝对不能将 SqlSession 实例的引用放在一个类的静态域，甚至一个类的实例变量也不行。 也绝不能将 SqlSession 实例的引用放在任何类型的托管作用域中
+                关闭操作很重要，为了确保每次都能执行关闭操作，应该把关闭操作放到 finally 块中
+                如果有两个SqlSession对象，必然导致开启两个事务
+                为了保证请求里面只有一个SqlSession对象，要把SqlSession对象放到ThreadLocal里，保证在线程中，取出的对象随时都是同一个
+
+                try (SqlSession session = sqlSessionFactory.openSession()) {
+                  // 应用逻辑代码
+                }
+
+    2、使用动态代理来处理事务
+        TransactionHandler（事务处理器，也写成TransactionInvocationHandler）
+
+    3、实现一个什么功能？
+        保存学生:tb1_student
+        自己之后去看看，太多太难懂了
+
+    4、注意：在实际开发中，编写sql语句的配置文件一般和Dao接口放在一起，
+    并且sql映射文件的文件名要和Dao接口的名字一致，方便管理(开发规范)（我这里没有放在一起，也没有重名）
+
+
