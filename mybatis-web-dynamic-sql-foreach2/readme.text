@@ -1,0 +1,140 @@
+
+一、关于mybatis当中的where和if（以分页查询为例）：
+  1、什么是分页查询，为什么要有分页查询?
+    底层数据库表当中的数据量太大了，一次展示在浏览器页面上，用户不方便查看，另外浏览器显示的数据量
+    比较大的时候，浏览器的负载也很大，影响用户体验
+  2、分页查询的sql语句应该如何编写?
+    select
+        *
+    from
+        emp
+    order by
+        sal desc
+    limit
+        0,5;  【其中，0表示起始下标，5表示长度】
+
+    3、通用的分页sql语句怎么写?
+      浏览器会向服务器提交哪些数据？
+        pageNo 页码
+        pageSize 每页显示的记录条数
+        查询条件也需要提交
+
+      通用的分页sql怎么写？
+        每页显示3条记录
+        第一页：[0,3]
+        第二页:[3,3]
+        第三页:[6,3]
+
+        每页显示pageSize条记录:
+            第pageSize页:[(pageNo - 1) * pageSize , pageSize]
+        通用sql:
+            select
+                t.*
+            from
+                tblname t
+            where
+                ....         【条件】
+            order by
+                t.x asc/desc
+            limit
+                (pageNo - 1)* pageSize , pageSize;     【通用的sql分页语句】
+
+    4、分页查询代码应该怎么实现?
+        分析1:浏览器向服务器提交什么数据？
+            查询条件
+            pageNo
+            pageSize
+
+        分析2:服务器向浏览器响应什么数据？
+            浏览器页面上需要显示什么数据？
+                需要返回1、符合查询条件的“当前页”数据
+                需要返回2、符合查询条件的“总记录”条数
+              这是一个怎样的json？
+                {
+                    "total" : 50,
+                    "datalist" : [{"id":"","name":",""birth":""},{"id":"","name":",""birth":""}...]
+                }
+              以上的JSON对应的java对象是一个Map集合:
+                Map<String,Object>集合
+                  key       value
+                --------------------
+                "tatal"       50(需要查询数据库,sql1)
+                "datalist"   datalist(也需要查询数据库,sql2)
+
+        分析3:sql语句需要怎么编写，怎么编写？
+            两条sql语句，第一条sql查询符合条件的总记录条数；第二条sql查询符合条件的当前页数据
+
+            sql1:查询符合条件的总记录条数
+                select
+                    count(*)
+                from
+                    tb1_student s
+                where
+                    ....需要动态
+
+            sql2:查询符合条件的当前页数据
+                select
+                    s.*
+                from
+                    tb1_student s
+                where
+                    ....需要动态
+                order by
+                    birth desc
+                limit
+                    (pageNo - 1)* pageSize , pageSize
+
+    5、我们这里实现只实现分页查询的服务端程序(只开发服务，不实现前端)
+        在企业中开发的时候，有很多程序员可能只负责开发服务端，开发完成后，对外提供“接口开发文档/API接口”
+          注意:这里不是说interface
+
+    6、mybatis中的sql语句不支持数学运算，可以提前算好
+
+    7、where和if嵌套:
+                <where>
+                    <if test="name1 != null and name1 != ''">       //注意，这里的and不能写成&&
+                        and s.name like '%' #{name1} '%'            //占位符两边要有空格
+                    </if>
+                    <if test="birth1 != null and birth1 != ''">
+                        and s.birth = #{birth1}
+                    </if>
+                </where>
+
+二、jackson插件可以直接把java字符串转成json对象
+    实际开发中json处理包括以下几种方式:
+        1、使用字符串拼接方式(这种方式效率最高，容错性最差，编码太困难)StringBuffer
+        2、使用各种插件:jackson jsonlib fastjson gson
+    json解析包括两个方向:
+        1、将java对象转成json格式的字符串
+        2、将json格式的字符串逆转成java对象
+    使用Jackson插件将java对象转换成json字符串，两行代码搞定:
+        ObjectMapper om = new ObjectMapper();
+        String json = om.writeValueAsString(java对象);
+        System.out.println(json);
+
+三、开发结束之后对外提供接口文档(不是指interface)，文档中应该描述这些信息:
+    1、接口地址
+        http://192.168.132.2:800/crm/student/page.do
+    2、接口参数
+        pageNo
+        pageSize
+        name
+        birth
+    3、接口返回值
+        {
+            "total" : 1
+            "datalist" : [
+                {
+                    "id" : "1",
+                    "name" : "zs",
+                    "birth" : "1910-11-12"
+                }
+            ]
+        }
+        注意:有的接口返回的不一定是json，可能是XML
+        安全级别较高的系统返回的都是XML字符串，XML更严谨
+
+四、怎么调用接口?
+    这里的接口时一个URL，可以使用HttpClient组件
+    HttpClient组件是基于java语言实现的，免费开源，使用这个组件可以发送get和post请求
+    使用这种方式可以达到异构系统整合，不同语言系统可以通信，可以交换数据
