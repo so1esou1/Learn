@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--以后要慢慢习惯把这个xml文件写成UserMapper.xml,这里写UserDao只是为了方便理解-->
+<!--实现对SqlSession 的调用-->
+
+<!--namespace需要绑定一个对应的Dao/Mapper接口，相当于原来的实现接口-->
+<!--现在版本的namespace很重要，必须指定好-->
+<mapper namespace="com.csu.dao.UserMapper">
+    <select id="getUserList" resultType="com.csu.pojo.User">
+        select * from mybatis.user
+    </select>
+
+    <!--根据id查询用户-->
+    <select id="getUserById" parameterType="int" resultType="com.csu.pojo.User">
+        select * from mybatis.user where id = #{id}
+    </select>
+
+    <!--增加用户-->
+    <insert id="addUser" parameterType="com.csu.pojo.User" >
+        insert into mybatis.user(id,name,pwd) values (#{id},#{name},#{pwd});   <!--对象中的属性可以直接取出来,反射机制-->
+    </insert>
+
+    <!--修改用户-->
+    <update id="updateUser" parameterType="com.csu.pojo.User" >
+        update mybatis.user set name=#{name},pwd=#{pwd} where id=#{id}
+    </update>
+
+    <!--删除用户-->
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.user where id=#{id}
+    </delete>
+
+
+</mapper>

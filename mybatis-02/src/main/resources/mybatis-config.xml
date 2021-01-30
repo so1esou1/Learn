@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--configuration核心配置文件-->
+<configuration>
+
+    <!--引入外部配置文件-->
+    <properties resource="db.properties" />
+    <!--配置文件也可以这样写（没什么用）：
+    <properties resource="db.properties" >
+        <properties name="username" value="root"/>
+        <properties name="password" value="so1esou1"/>
+    </properties>
+    （两种方式同时使用的话优先使用外部配置文件）
+    -->
+
+    <!--1、定类取别名-->
+    <typeAliases>
+        <typeAlias type="com.csu.pojo.User" alias="User" />     <!--给实体类com.csu.pojo.User取别名叫User-->
+    </typeAliases>
+    <!--2、指定包取别名-->
+    <!--
+    <typeAliases>
+        <package name="com.csu.pojo" />
+    </typeAliases>
+    -->
+
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>     <!--事务管理，默认用的是jdbc的食物管理-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--每一个Mapper.xml都需要在mybatis核心配置文件中注册！-->
+    <mappers>
+        <!-- <mapper resource="com/csu/dao/UserMapper.xml" />     1、使用相对于类路径的资源引用 -->
+        
+        <mapper class="com.csu.dao.UserMapper" />       <!--2、使用映射器接口实现类的完全限定类名 -->
+
+        <!--  <package name="com.csu.dao"/>               3、将包内的映射器接口实现全部注册为映射器 -->
+        <!--使用第二、三种需要注意:1、接口和它的配置文件必须同名 2、接口和配置文件必须在同一个包下-->
+    </mappers>
+
+</configuration>
