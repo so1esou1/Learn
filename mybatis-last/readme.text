@@ -1,0 +1,49 @@
+
+一、关于mybatis中的#{}和${}符合的区别？
+    1、先回顾JDBC中的Statement和PreparedStatement有什么区别？
+        Statement:
+                ...
+                String username = "admin";   //用户输入的信息
+                String password = "123";     //用户输入的信息
+                Statement stmt = conn.createStatement();
+                //先进行sql语句的拼接
+                String sql = "select * from tb1_user username = '" + username + "' and password = '" + password + "'";
+                //执行到这里程序被发送到DBMS数据库管理系统当中，DBMS负责将该sql语句进行编译
+                rs = stmt.execteQuery(sql);
+                if(rs.next()){
+                    //登录成功了
+                }
+                ...
+
+        以上存在sql注入现象。导致sql注入的根本原因是用户输入的信息中含有sql语句的关键字，
+        并且这些关键字参加了sql语句的编译过程，导致sql语句的原意被扭曲了(根本原因是用户提供的信息被编译进去了)
+        Statement适合：凡是涉及sql语句拼接的操作都离不开statement，专门用于sql语句拼接的场景下
+
+        PreparedStatement:
+                ...
+                String username = "admin";   //用户输入的信息
+                String password = "123";     //用户输入的信息
+                String sql = "select * from tb1_user username = ? and password = ?";
+                //程序执行到此处会对以上的sql语句进行一次编译
+                preparedStatement ps = conn.prepareStatement(sql);
+                //给?占位符传值
+                ps.setString(1 , username);
+                ps.setString(2 , password);
+                rs = stmt.execteQuery(sql);
+                if(rs.next()){
+                    //登录成功了
+                }
+                ...
+
+        只适合于给sql语句的占位符传值，不能拼接sql语句
+
+    2、#{}和${}在mybatis中有什么区别?
+        #{}对应的是:PrepareStatement，#{}占位符主要用来完成sql语句传值操作的
+        ${}对应的是:Statement，${}占位符主要用来完成sql语句拼接操作的
+
+        ${} 先进行sql语句拼接，然后编译
+        #{} 先进行sql语句框架的编译，然后再传值
+
+
+
+
