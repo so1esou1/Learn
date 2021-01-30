@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.csu.dao.UserMapper">
+
+    <!--根据id查询用户-->
+    <!--
+    <select id="getUserById" parameterType="int" resultType="com.csu.pojo.User">
+        select * from mybatis.user where id = #{id}
+    </select>
+    -->
+
+
+    <!--使用结果集映射-->
+    <resultMap id="UserMap" type="User">    <!--id对应的是要使用的sql。type要映射User-->
+        <result column="id" property="id" />    <!--列column是数据库中的字段，properties是实体类中的属性-->
+        <result column="name" property="name" />
+        <result column="pwd" property="password" />    <!--在这里确定要映射的双方-->
+    </resultMap>
+
+    <select id="getUserById" resultMap="UserMap">
+        select * from mybatis.user where id = #{id}
+    </select>
+
+</mapper>
