@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.csu.dao.BlogMapper">
+    <!--添加博客信息-->
+    <insert id="addBlog" parameterType="com.csu.pojo.Blog">
+        insert into mybatis.blog(id,title,author,create_time,views)
+        values(#{id},#{title},#{author},#{createTime},#{views})
+
+    </insert>
+
+
+    <sql id="if-title-author">     <!--id任意,在其他语句中导入-->
+        <if test="title != null">
+            title = #{title}
+        </if>
+        <if test="author != null">
+            and author=#{author}
+        </if>
+    </sql>
+
+
+
+
+    <!--查询博客IF语句-->
+    <select id="queryBlogIF" parameterType="map" resultType="com.csu.pojo.Blog">
+        <!--   select * from mybatis.blog where title=#{title} and author=#{author}   要求不输入字段也能查  -->
+        select * from mybatis.blog where 1=1  <!--1=1代表一定-->
+        <if test="title != null">
+            and title=#{title}
+        </if>
+        <if test="author != null">
+            and anthor=#{author}
+        </if>
+    </select>
+
+
+    <!--<select id="queryBlogChoose" parameterType="map" resultType="com.csu.pojo.Blog">
+        <!-select * from mybatis.blog
+        where
+            id=#{id}
+        and
+            name=#{name}
+        上面sql代码用标签替代，把这个修改成:
+
+        select * from mybatis.blog
+        <where>
+            <if test="">
+                id=#{id}
+            </if>
+            <if test="">
+                and name=#{name}
+            </if>
+        </where>
+    </select>  -->
+
+    <select id="queryBlogChoose" parameterType="map" resultType="com.csu.pojo.Blog">
+        select * from mybatis.blog
+        <where>
+            <include refid="if-title-author"></include>
+        </where>
+    </select>
+
+
+
+
+    <!--choose进行选择-->
+    <select id="queryBlogChoose" parameterType="map" resultType="com.csu.pojo.Blog">
+        select * from mybatis.blog
+        <where>
+            <choose>
+                <when test="title != null">
+                    title=#{title}
+                </when>
+                <when test="author != null">
+                    and author=#{author}
+                </when>
+                <otherwise>
+                    and views=#{views}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--更新博客-->
+    <update id="updateBlog" parameterType="map" >
+        <!--  之前写：update mybatis.blog set id=#{id},id=#{id} where   -->
+        update mybatis.blog
+        <set>
+            <if test="title != null">
+                title = #{title}
+            </if>
+            <if test="author != null">
+                author = #{author}
+            </if>
+        </set>
+        where id = #{id}
+
+        <trim prefix="" prefixOverrides="" suffix="" suffixOverrides=""></trim>
+    </update>
+
+
+    <!--使用foreach，查询第1-2-3号记录的博客-->
+    <!--把sql语句 select * from mybatis.blog where 1=1 and (id=1 or id=2 or id=3) 改成具有动态性
+        我们现在传递一个万能的Map，这个Map中可以存在一个集合
+    -->
+    <select id="queryBlogForeach" parameterType="map" resultType="com.csu.pojo.Blog">
+        select * from mybatis.blog
+        <where>
+            <foreach collection="ids" item="id" open="and (" close=")" separator="or">    <!--以and (开始，)结束，or为分隔符-->
+                id=#{id}
+            </foreach>
+        </where>
+    </select>
+
+</mapper>
