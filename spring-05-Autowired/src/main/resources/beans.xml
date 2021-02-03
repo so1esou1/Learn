@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/context/spring-aop.xsd">
+
+    <context:annotation-config/>   <!--注解的支持-->
+
+    <bean id="cat" class="com.csu.pojo.Cat"/>
+    <bean id="dog" class="com.csu.pojo.Dog"/>
+
+    <!--     <bean id="people" class="com.csu.pojo.People" autowire="byName">
+        <property name="name" value="小李"/>
+        <property name="dog" ref="dog" />
+        <property name="cat" ref="cat" />
+    </bean>     -->
+
+
+    <!--以下是采用自动装配的方式:-->
+    <!--通过name进行自动装配,byName会自动在容器中寻找和自己对象set方法后面的值对应的beanid!-->
+    <!--    <bean id="people" class="com.csu.pojo.People" autowire="byName">
+        <property name="name" value="小李"/>
+    </bean>     -->
+
+    <!--通过type进行自动装配,byType会自动在容器中寻找和自己对象属性类型相同的bean (class的值)!-->
+    <!--    <bean id="people" class="com.csu.pojo.People" autowire="byType">
+        <property name="name" value="小李"/>
+    </bean>    -->
+
+
+    <!--通过注解进行自动装配-->
+    <bean id="people" class="com.csu.pojo.People" />
+
+    <bean id="cat111" class="com.csu.pojo.Cat" />
+
+</beans>
