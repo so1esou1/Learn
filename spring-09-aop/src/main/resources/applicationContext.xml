@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--注册bean-->
+    <bean id="userService" class="com.csu.service.UserServiceImpl" />
+    <bean id="log" class="com.csu.log.Log" />
+    <bean id="afterLog" class="com.csu.log.AfterLog"/>
+
+    <!--配置AOP,需要导入aop的约束-->
+
+
+    <!--方式一:使用原生的API接口-->
+    <!--
+    <aop:config>      aop的配置
+        切入点:需要到哪执行   expression执行表达式:execution(要执行的位置:* * * * *)
+        <aop:pointcut id="pointcut" expression="execution(* com.csu.service.UserServiceImpl.*(..))"/>
+
+        执行环绕增加
+        <aop:advisor advice-ref="log" pointcut-ref="pointcut"/>     意思是把log类切入到UserServiceImpl方法上面
+        <aop:advisor advice-ref="afterLog" pointcut-ref="pointcut"/>
+    </aop:config>
+    -->
+
+
+
+
+    <!--方式二:自定义类-->
+    <bean id="diy" class="com.csu.diy.DiyPointCut" />
+
+    <aop:config>
+        <!--自定义切面，ref要引用的类-->
+        <aop:aspect ref="diy">
+            <!--切入点-->
+            <aop:pointcut id="point" expression="execution(* com.csu.service.UserServiceImpl.*(..))"/>
+            <!--通知-->
+            <aop:before method="before" pointcut-ref="point" />
+            <aop:after method="after" pointcut-ref="point" />
+            <!--第二种方式比第一种方式更容易、更明确-->
+        </aop:aspect>
+    </aop:config>
+
+
+
+
+    <!--方式三-->
+    <bean id="annotationPointCut" class="com.csu.diy.AnnotationPointCut" />
+    <!--开启注解支持     JDK(默认 proxy-target-class="false")、cglib(proxy-target-class="true")-->
+    <aop:aspectj-autoproxy />                  <!--自动代理-->
+    <!--注解方式很简短-->
+</beans>
