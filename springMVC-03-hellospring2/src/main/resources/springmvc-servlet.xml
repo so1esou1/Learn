@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--这个配置文件就相当于是DispatcherServlet-->
+
+    <!--讲原理时才用到的处理器映射器、处理器适配器，正常开发中不会进行配置-->
+
+    <!--处理器映射器-->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+    <!--处理器适配器-->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+    <!--视图解析器:模板引擎 Thymeleaf Freemarker-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>     <!--prefix是前缀-->
+        <property name="suffix" value=".jsp"/>     <!--suffix是后缀-->
+    </bean>
+
+    <!--BeanNameUrlHandlerMapping处理器需要根据bean的名字来找，以后不会用这个处理器-->
+    <bean id="/hello" class="com.csu.controller.HelloController" />
+
+</beans>
