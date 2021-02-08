@@ -1,0 +1,40 @@
+package com.csu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/user")
+public class LoginController {
+
+    @RequestMapping("/goLogin")
+    public String login(){
+        return "login";
+    }
+
+
+    @RequestMapping("/login")
+    public String login(HttpSession session, String username, String password, Model model){
+        //把用户的信息存在session中
+        session.setAttribute("userLoginInfo",username);
+
+        model.addAttribute("username",username);
+        return "main";
+    }
+
+    @RequestMapping("/goOut")
+    public String goOut(HttpSession session){
+        //session.invalidate();    最好不要采用毁掉的方法，采用下一种方法
+        session.removeAttribute("userLoginInfo");
+
+        return "main";
+    }
+
+    @RequestMapping("/main")
+    public String main(){
+        return "main";
+    }
+}
