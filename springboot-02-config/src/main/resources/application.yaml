@@ -1,0 +1,34 @@
+
+#存普通的key-value
+#name: lily
+
+#存对象
+#Student:
+#  name: tom
+# age: 3
+
+#行内写法:
+#student: {name: mary,age: 5}
+
+#数组
+#pets:
+#  - cat
+#  - dog
+# - pig
+
+#animals: [cat,dog,pig]
+
+Person:
+  name: qinjiang
+  age: 3
+  happy: false
+  birth: 2019/10/10
+  maps: {k1: v1,k2: v2}
+  lists:
+    -code
+    -music
+    -girls
+  dog:
+    name: 旺财
+    age: 3
+
