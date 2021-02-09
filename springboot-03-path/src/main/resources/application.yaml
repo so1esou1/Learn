@@ -1,0 +1,18 @@
+# yaml可以在一个文件中进行多环境的配置，使用符号"---"
+server:
+  port: 8084
+spring:
+  profiles:
+    active: dev         #在默认端口中选择想要激活的端口进行使用
+
+---
+server:
+  port: 8085
+spring:
+  profiles: dev                    #取名叫做dev
+
+---
+server:
+  port: 8086
+spring:
+  profiles: test
