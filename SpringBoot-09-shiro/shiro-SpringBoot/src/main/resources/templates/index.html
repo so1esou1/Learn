@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+    <h1>首页</h1>
+
+    <div th:if="${session.loginUser==null}">        <!--session为空就显示登录-->
+        <a th:href="@{/tologin}">登录</a>
+    </div>
+
+    <p th:text="${msg}"></p>
+
+    <hr>
+
+    <div shiro:hasPermission="user:add">           <!--假设用户有add权限就显示add标签-->
+        <a th:href="@{/user/add}">add</a>
+    </div>
+
+    <div shiro:hasPermission="user:update">
+        <a th:href="@{/user/update}">update</a>    <!--假设用户有update权限就显示update标签-->
+    </div>
+
+
+
+</body>
+</html>
