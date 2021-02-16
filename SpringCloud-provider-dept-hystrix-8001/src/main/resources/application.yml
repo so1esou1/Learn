@@ -1,0 +1,35 @@
+server:
+  port: 8001
+
+#mybatis的配置
+mybatis:
+  type-aliases-package: com.csu.springcloud.pojo
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+#spring的配置
+spring:
+  application:
+    name: SpringCloud-provider-dept
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource    #数据源
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://localhost:3306/db01?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: so1esou1
+
+
+#进行eureka的配置，将提供者注册进eureka中
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    instance-id: springcloud-provider-hystrix-dept8001
+
+
+#配置info监控页面的一些信息
+info:
+  app.name: csu-springcloud
+  company.name: 中南大学
+  author: wxz

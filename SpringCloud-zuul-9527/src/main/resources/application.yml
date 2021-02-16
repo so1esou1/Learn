@@ -1,0 +1,25 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: springcloud-zuul
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+    instance:
+      instance-id: zuul9527.com
+      prefer-ip-address: true
+
+info:
+  app.name: csu-springcloud
+  company: nb
+
+zuul:
+  routes:
+    mydept.serverId: springcloud-provider-dept
+    mydept.path: /mydept/**            #输入/mydept/** 访问springcloud-provider-dept的内容
+  ignored-services: springcloud-provider-dept       #不能再使用这个名字，忽略这种请求,只能通过路由网关的请求进行访问,写"*"则是隐藏全部的真实项目
+  prefix: /csu      #一个公共的访问前缀，项目前都需要加上才能访问
