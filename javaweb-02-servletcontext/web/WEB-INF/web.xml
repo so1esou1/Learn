@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+
+    <servlet>
+        <servlet-name>hello</servlet-name>
+        <servlet-class>com.csu.servlet.ServletContextTest</servlet-class>
+
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>hello</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>get</servlet-name>
+        <servlet-class>com.csu.servlet.GetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>get</servlet-name>
+        <url-pattern>/get</url-pattern>
+    </servlet-mapping>
+
+
+    <!--配置一些web应用的初始化参数:-->
+    <context-param>
+        <param-name>url</param-name>    <!--这个值作为参数输入ServletDemo3中的getInitParameter-->
+        <param-value>jdbc:mysql://localhost:3306/mybatis</param-value>
+    </context-param>
+    
+    
+    <servlet>
+        <servlet-name>gp</servlet-name>
+        <servlet-class>com.csu.servlet.ServletDemo3</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>gp</servlet-name>
+        <url-pattern>/gp</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>for</servlet-name>
+        <servlet-class>com.csu.servlet.ServletDemo4</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>for</servlet-name>
+        <url-pattern>/for</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>prop</servlet-name>
+        <servlet-class>com.csu.servlet.ServletDemo5</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>prop</servlet-name>
+        <url-pattern>/prop</url-pattern>
+    </servlet-mapping>
+</web-app>
