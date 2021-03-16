@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+
+person:
+  name: zhangsan
+  age: 3
+  happy: false
+  birth: 2000/12/5
+  maps: {k1: v1,k2: v2}     #注意这里的map的Map类型的书写方式
+  lists:
+    - code
+    - music
+    - girl
+  dog:
+    name: 旺财
+    age: 3
