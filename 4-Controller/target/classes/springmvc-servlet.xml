@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--实际开发中这三个也不用写-->
+    <!--<context:component-scan base-package="com.csu.controller" />       这个包下的所有的controller注解都被识别
+    注解驱动:
+    <mvc:annotation-driven />
+    web过滤器资源
+    <mvc:default-servlet-handler />-->
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>     <!--prefix是前缀-->
+        <property name="suffix" value=".jsp"/>     <!--suffix是后缀-->
+    </bean>
+
+
+    <!--注册test.jsp-->
+    <bean name="/t1" class="com.csu.controller.ControllerTest1" />
+
+
+</beans>
